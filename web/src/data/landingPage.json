@@ -1,0 +1,150 @@
+{
+    "site_name": "Laundryku",
+    "year": "2022",
+    "project_name": "UKK 2022",
+    "author": "@Gagassurya19",
+    "author_link":"http://instagram.com/gagassurya19",
+    "navbar": {
+        "menu": [
+            {
+                "tab": "Testimoni",
+                "link": "#testimoni"
+            },
+            {
+                "tab": "Package",
+                "link": "#package"
+            },
+            {
+                "tab": "Contact",
+                "link": "#contact"
+            }
+        ],
+        "button": {
+            "title": "ORDER NOW",
+            "link": "/order"
+        }
+    },
+    "hero": {
+        "image": "hero-image.jpg",
+        "title": "Professional laundry & dry cleaning"
+    },
+    "statistic": {
+        "user": "2700",
+        "total_subscribers": "2600",
+        "total_laundry": "3500",
+        "total_outlet": "19"
+    },
+    "testimoni": {
+        "title": "Our happy customers",
+        "subTitle": "More than 5,000+ ratings on Google, App Store & Google Play Store",
+        "user": [
+            {
+                "picture": "",
+                "name": "John Doe",
+                "description": "Nothing compares to the feeling of receiving your sheets back perfectly pressed or a hundred pairs of socks matched and folded and not having to do any of it yourself. Some people practice self-love with spa days and massages, I practice self-love by never doing laundry again"
+            },
+            {
+                "picture": "",
+                "name": "Jo Anne",
+                "description": "I've been with washmen for years and very happy with their service. Customer service is always quick to respond to any questions"
+            },
+            {
+                "picture": "",
+                "name": "Karim",
+                "description": "Use them for my everyday clothes and work wear. They do things that nobody else does... like send you photos of each piece of clothing you send, photos of stains and damages..."
+            },
+            {
+                "picture": "",
+                "name": "Karim",
+                "description": "Use them for my everyday clothes and work wear. They do things that nobody else does... like send you photos of each piece of clothing you send, photos of stains and damages..."
+            }
+        ]
+    },
+    "features": {
+        "title": "Dry cleaning & laundry. The easy way.",
+        "subTitle": "Our Offer",
+        "offer": [
+            {
+                "icon": "",
+                "title": "Cashless payments",
+                "details": ""
+            },
+            {
+                "icon": "",
+                "title": "Contactless pickup and delivery",
+                "details": ""
+            },
+            {
+                "icon": "",
+                "title": "In-app live chat support",
+                "details": ""
+            }
+        ]
+    },
+    "package": {
+        "title": "Package & Pricing",
+        "subTitle": "Each of our color-coded bags provide a unique service. With this system, all you have to do is fill your laundry bags according to the service you need.",
+        "package_offer": [
+            {
+                "title": "Clean & Press",
+                "subTitle": "Priced per item",
+                "details": "Fill this bag with items that need perfect cleaning & pressing. We dry clean, hand wash, OptiClean, AirDry and use 50+ unique cleaning programs. Our experts know what's best for each fabric!",
+                "price": "5000",
+                "per": "/kg"
+            },
+            {
+                "title": "Homecare®",
+                "subTitle": "Full bag for AED 75*",
+                "details": "Fill the Homecare® bag with home linens, bedding, towels and more. We will clean and perfectly press your items. *Maximum 15 items per bag. Extra items will be charged AED 8 per piece.",
+                "price": "3000",
+                "per": "/ton"
+            },
+            {
+                "title": "Wash & Fold",
+                "subTitle": "Full bag for AED 65",
+                "details": "Stuff the bag to the top with any item suitable for 40°C washing and no pressing. We'll wash, dry and neatly fold your items.",
+                "price": "7000",
+                "per": "/kg"
+            }
+        ]
+    },
+    "contact": {
+        "title": "Our Contact & Office",
+        "subTitle": "We wish your feedback for our best service in the future",
+        "location": "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15804.854399118894!2d112.659016!3d-7.976862!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xf6c889ac7452dc3a!2sSMK%20Telkom%20Malang!5e0!3m2!1sen!2ssg!4v1643213761960!5m2!1sen!2ssg",
+        "address": "Jl. Danau Ranau, Sawojajar, Kec. Kedungkandang, Kota Malang, Jawa Timur 65139, Indonesia",
+        "email": "contact@laundryku.com",
+        "phone": "+62341712500",
+        "notes": ""
+    },
+    "gallery": {
+        "title": "Documentation of our progress",
+        "subTitle": "Your clothes are in safe hands. Our 30,000 ft² facility houses some of the world's best machines and technology. It's designed to clean, sanitize, and minimize fabric strain while maximizing water and energy efficiency in benefit of the environment.",
+        "image": [
+            {
+                "title": "",
+                "src": "https://picsum.photos/502/302"
+            },
+            {
+                "title": "",
+                "src": "https://picsum.photos/501/301"
+            },
+            {
+                "title": "",
+                "src": "https://picsum.photos/600/360"
+            },
+            {
+                "title": "",
+                "src": "https://picsum.photos/601/361"
+            },
+            {
+                "title": "",
+                "src": "https://picsum.photos/502/302"
+            },
+            {
+                "title": "",
+                "src": "https://picsum.photos/503/303"
+            }
+        ]
+    }
+}
