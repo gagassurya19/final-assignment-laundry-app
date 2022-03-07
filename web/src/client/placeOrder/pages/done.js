@@ -1,147 +1,62 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { NavbarClient, Timeline, Footer } from '../../../components';
+import { Footer } from '../../../components';
 
-export default function Done() {
-    return (
-        <section class="bg-gray-100">
-            <div className="container mx-auto">
-                <div class=" mx-auto py-10 md:py-16">
-                    <h1 class="title-font sm:text-3xl text-2xl mb-1 font-medium text-gray-900">Order Success</h1>
-                    <p class="mb-11 leading-relaxed text-gray-500">This is your invoices</p>
-                    <article class="shadow-none md:shadow-md md:rounded-md overflow-hidden">
-                        <div class="md:rounded-b-md  bg-white">
-                            <div class="p-9 border-b border-gray-200">
-                                <div class="space-y-6">
-                                    <div class="flex justify-between items-top">
-                                        <div class="space-y-4">
-                                            <div>
-                                                <div className="mb-5 flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
-                                                    <div className="flex-shrink-0 flex items-center title-font font-medium text-gray-900">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="hidden lg:block h-10 w-auto text-white p-2 bg-indigo-500 rounded-full" viewBox="0 0 24 24">
-                                                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-                                                        </svg>
-                                                        <Link to="/">
-                                                            <span class="ml-3 text-xl hidden sm:block">Laundryku</span>
-                                                        </Link>
-                                                    </div>
-                                                </div>
-                                                <p class="font-bold text-lg"> Invoice </p>
-                                                <p> Laundryku </p>
-                                            </div>
-                                            <div>
-                                                <p class="font-medium text-sm text-gray-400"> Billed To </p>
-                                                <p> Tony Stark </p>
-                                                <p> tony@starkindustriesxyz.com </p>
-                                                <p> (02) 1234 1234 </p>
-                                            </div>
-                                        </div>
-                                        <div class="space-y-2">
-                                            <div>
-                                                <p class="font-medium text-sm text-gray-400"> Invoice Number </p>
-                                                <p> INV-MJ0001 </p>
-                                            </div>
-                                            <div>
-                                                <p class="font-medium text-sm text-gray-400"> Invoice Date </p>
-                                                <p> 31 December 2021 </p>
-                                            </div>
-                                            <div>
-                                                <p class="font-medium text-sm text-gray-400"> ABN </p>
-                                                <p> 57 630 182 446 </p>
-                                            </div>
-                                            <div>
-                                                <a href="#" target="_blank" class="inline-flex items-center text-sm font-medium text-blue-500 hover:opacity-75 "> Download PDF <svg class="ml-0.5 h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                    <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path>
-                                                    <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path>
-                                                </svg>
-                                                </a>
-                                            </div>
-                                            <div>
-                                                <a href="#" target="_blank" class="inline-flex items-center text-sm font-medium text-blue-500 hover:opacity-75 "> Pay Balance <svg class="ml-0.5 h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                    <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path>
-                                                    <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path>
-                                                </svg>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
+export default class Done extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            isSuccess: true
+        }
+    }
+    render() {
+        return (
+            <section>
+                <div className="container mx-auto">
+                    <div class=" mx-auto py-10 md:py-16">
+                        {this.state.isSuccess ? (
+                            <div id="alert-additional-content-3" class="p-4 mb-4 bg-green-100 rounded-lg dark:bg-green-200" role="alert">
+                                <div class="flex items-center">
+                                    <svg class="mr-2 w-5 h-5 text-green-700 dark:text-green-800" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+                                    <h3 class="text-lg font-medium text-green-700 dark:text-green-800">Your Transaction is Success</h3>
+                                </div>
+                                <div class="mt-2 mb-4 text-sm text-green-700 dark:text-green-800">
+                                    View the invoice in the button below. You can also print the invoice. <br />
+                                </div>
+                                <div class="flex">
+                                    <Link to="/order/123" type="button" class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 text-center inline-flex items-center dark:bg-green-800 dark:hover:bg-green-900">
+                                        <svg class="-ml-0.5 mr-2 h-4 w-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path></svg>
+                                        View Invoice
+                                    </Link>
+                                    <Link to="/home" type="button" class="text-green-700 bg-transparent border border-green-700 hover:bg-green-800 hover:text-white focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-xs px-3 py-1.5 text-center dark:border-green-800 dark:text-green-800 dark:hover:text-white" data-collapse-toggle="alert-additional-content-3" aria-label="Close">
+                                        Dismiss
+                                    </Link>
                                 </div>
                             </div>
-                            <div class="p-9 border-b border-gray-200">
-                                <p class="font-medium text-sm text-gray-400"> Note </p>
-                                <p class="text-sm"> Thank you for your order. </p>
-                            </div>
-                            <table class="w-full divide-y divide-gray-200 text-sm">
-                                <thead>
-                                    <tr>
-                                        <th scope="col" class="px-9 py-4 text-left font-semibold text-gray-400"> Item </th>
-                                        <th scope="col" class="py-3 text-left font-semibold text-gray-400">  </th>
-                                        <th scope="col" class="py-3 text-left font-semibold text-gray-400"> Amount </th>
-                                        <th scope="col" class="py-3 text-left font-semibold text-gray-400"> Discount </th>
-                                        <th scope="col" class="py-3 text-left font-semibold text-gray-400"></th>
-                                    </tr>
-                                </thead>
-                                <tbody class="divide-y divide-gray-200">
-                                    <tr>
-                                        <td class="px-9 py-5 whitespace-nowrap space-x-1 flex items-center">
-                                            <div>
-                                                <p> Jericho III (YA-4) </p>
-                                                <p class="text-sm text-gray-400"> Nuclear-armed ICBM </p>
-                                            </div>
-                                        </td>
-                                        <td class="whitespace-nowrap text-gray-600 truncate"></td>
-                                        <td class="whitespace-nowrap text-gray-600 truncate"> $380,000.00 </td>
-                                        <td class="whitespace-nowrap text-gray-600 truncate"> 0% </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="px-9 py-5 whitespace-nowrap space-x-1 flex items-center">
-                                            <div>
-                                                <p> Pym Particles (Pack of 10,000) </p>
-                                                <p class="text-sm text-gray-400"> Redacted Description </p>
-                                            </div>
-                                        </td>
-                                        <td class="whitespace-nowrap text-gray-600 truncate"></td>
-                                        <td class="whitespace-nowrap text-gray-600 truncate"> $280,000.00 </td>
-                                        <td class="whitespace-nowrap text-gray-600 truncate"> 0% </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <div class="p-9 border-b border-gray-200">
-                                <div class="space-y-3">
-                                    <div class="flex justify-between">
-                                        <div>
-                                            <p class="text-gray-500 text-sm"> Subtotal </p>
-                                        </div>
-                                        <p class="text-gray-500 text-sm"> $660,000.00 </p>
-                                    </div>
-                                    <div class="flex justify-between">
-                                        <div>
-                                            <p class="text-gray-500 text-sm"> Tax </p>
-                                        </div>
-                                        <p class="text-gray-500 text-sm"> $0.00 </p>
-                                    </div>
-                                    <div class="flex justify-between">
-                                        <div>
-                                            <p class="text-gray-500 text-sm"> Total </p>
-                                        </div>
-                                        <p class="text-gray-500 text-sm"> $660,000.00 </p>
-                                    </div>
+                        ) : (
+                            <div id="alert-additional-content-2" class="p-4 mb-4 bg-red-100 rounded-lg dark:bg-red-200" role="alert">
+                                <div class="flex items-center">
+                                    <svg class="mr-2 w-5 h-5 text-red-700 dark:text-red-800" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+                                    <h3 class="text-lg font-medium text-red-700 dark:text-red-800">Your Transaction is Fail</h3>
+                                </div>
+                                <div class="mt-2 mb-4 text-sm text-red-700 dark:text-red-800">
+                                    Please try again. 
+                                </div>
+                                <div class="flex">
+                                    <Link to="/order" type="Button" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 text-center inline-flex items-center dark:bg-red-800 dark:hover:bg-red-900">
+                                        <svg class="-ml-0.5 mr-2 h-4 w-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path></svg>
+                                        Try Again
+                                    </Link>
+                                    <Link to="/home" type="Button" class="text-red-700 bg-transparent border border-red-700 hover:bg-red-800 hover:text-white focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-xs px-3 py-1.5 text-center dark:border-red-800 dark:text-red-800 dark:hover:text-white" data-collapse-toggle="alert-additional-content-2" aria-label="Close">
+                                        Dismiss
+                                    </Link>
                                 </div>
                             </div>
-                            <div class="p-9 border-b border-gray-200">
-                                <div class="space-y-3">
-                                    <div class="flex justify-between">
-                                        <div>
-                                            <p class="font-bold text-black text-lg"> Amount Due </p>
-                                        </div>
-                                        <p class="font-bold text-black text-lg"> $360.00 </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
+                        )}
+                    </div>
+                    <Footer />
                 </div>
-                <Footer />
-            </div>
-        </section>
-    )
+            </section>
+        )
+    }
 }

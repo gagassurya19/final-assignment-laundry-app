@@ -23,15 +23,16 @@ export default function Navbar() {
                             </p>
                         </a>
                         <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center space-x-4 text-sm">
-                            <Link to="/admin" class="mr-5 px-2 xl:px-4 py-2 text-gray-800 rounded-md hover:bg-gray-200">Dashboard</Link>
-                            <Link to="/admin/transaction" class="mr-5 px-2 xl:px-4 py-2 text-gray-800 rounded-md hover:bg-gray-200">Transaction</Link>
-                            <Link to="/admin/package" class="mr-5 px-2 xl:px-4 py-2 text-gray-800 rounded-md hover:bg-gray-200">Package</Link>
-                            <Link to="/admin/member" class="mr-5 px-2 xl:px-4 py-2 text-gray-800 rounded-md hover:bg-gray-200">Member</Link>
-                            <Link to="/admin/administrator" class="mr-5 px-2 xl:px-4 py-2 text-gray-800 rounded-md hover:bg-gray-200">Administrator</Link>
+                            <Link to="/admin" class="mr-5 px-2 xl:px-4 py-2 rounded-md hover:bg-gray-200 text-xs text-gray-500 font-semibold uppercase tracking-wider">Dashboard</Link>
+                            <Link to="/admin/transaction" class="mr-5 px-2 xl:px-4 py-2 rounded-md hover:bg-gray-200 text-xs text-gray-500 font-semibold uppercase tracking-wider">Transaction</Link>
+                            <Link to="/admin/package" class="mr-5 px-2 xl:px-4 py-2 rounded-md hover:bg-gray-200 text-xs text-gray-500 font-semibold uppercase tracking-wider">Package</Link>
+                            <Link to="/admin/outlet" class="mr-5 px-2 xl:px-4 py-2 rounded-md hover:bg-gray-200 text-xs text-gray-500 font-semibold uppercase tracking-wider">Outlet</Link>
+                            <Link to="/admin/member" class="mr-5 px-2 xl:px-4 py-2 rounded-md hover:bg-gray-200 text-xs text-gray-500 font-semibold uppercase tracking-wider">Member</Link>
+                            <Link to="/admin/administrator" class="mr-5 px-2 xl:px-4 py-2 rounded-md hover:bg-gray-200 text-xs text-gray-500 font-semibold uppercase tracking-wider">Administrator</Link>
                         </nav>
                         <ul class="flex items-center gap-6">
                             <li>
-                                <Link to="profile" class="text-sm font-sans text-gray-800 font-semibold tracking-wider">
+                                <Link to="/admin/profile" class="text-sm font-sans text-gray-800 font-semibold tracking-wider">
                                     Admin
                                 </Link>
                             </li>

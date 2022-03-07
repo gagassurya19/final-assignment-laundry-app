@@ -55,18 +55,37 @@ export default class Modal_dropoff extends React.Component {
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                     </svg>
                     <span class="flex flex-col text-left pl-2">
-                        <span class="title-font font-medium text-gray-900">Drop Off</span>
-                        <span class="text-gray-500 text-sm">Pilih tanggal dan jam pengiriman</span>
+                        {this.state.selected_date && this.state.selected_time !== "" ? (
+                            <>
+                                <span class="title-font font-medium text-gray-900">Drop Off</span>
+                                <span class="text-gray-500 text-sm">Akan di Drop Off pada <span class="font-semibold">{this.state.selected_date}</span> di jam <span class="font-semibold">{this.state.selected_time}</span></span>
+                            </>
+                        ) : (
+                            <>
+                                <span class="title-font font-medium text-gray-900">Drop Off</span>
+                                <span class="text-gray-500 text-sm">Pilih tanggal dan jam penjemputan</span>
+                            </>
+                        )}
                     </span>
                 </button>
                 {/* modal */}
                 <Modal modal={this.state.modal}>
                     {/* notes */}
-                    <div>
-                        <h3 class="text-lg font-medium leading-6 text-gray-900">{this.state.modal_content.modal_title}</h3>
-                        <p class="mb-8 leading-relaxed text-gray-500">{this.state.modal_content.modal_subTitle}</p>
-                        <p class="mt-1 text-sm text-gray-600" dangerouslySetInnerHTML={{ __html: this.state.modal_content.modal_desc }}></p>
-
+                    <div class="flex flex-col space-y-9">
+                        <div>
+                            <h3 class="text-lg font-medium leading-6 text-gray-900">{this.state.modal_content.modal_title}</h3>
+                            <p class="mb-8 leading-relaxed text-gray-500">{this.state.modal_content.modal_subTitle}</p>
+                            <p class="mt-1 text-sm text-gray-600" dangerouslySetInnerHTML={{ __html: this.state.modal_content.modal_desc }}></p>
+                        </div>
+                        {this.state.selected_date && this.state.selected_time !== "" ? (
+                            <div className="bg-purple-100 border border-purple-400 text-purple-700 px-4 py-3 rounded relative my-5 text-center">
+                                <h3 class="text-lg font-medium leading-6 text-gray-900">
+                                    Laundry kamu akan dikirim pada tanggal {this.state.selected_date} di jam {this.state.selected_time}
+                                </h3>
+                            </div>
+                        ) : (
+                            null
+                        )}
                     </div>
                     {/* Form */}
                     <div>

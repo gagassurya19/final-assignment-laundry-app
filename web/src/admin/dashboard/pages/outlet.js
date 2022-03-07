@@ -1,7 +1,7 @@
 import React from "react";
 import Statistic from "./components/statistic";
 
-export default class Administrator extends React.Component {
+export default class Outlet extends React.Component {
     constructor() {
         super()
         this.state = {
@@ -16,8 +16,8 @@ export default class Administrator extends React.Component {
                     <div className="container mx-auto py-10">
                         <Statistic />
                         <div className="my-7">
-                            <h1 class="title-font sm:text-3xl text-2xl mb-1 font-medium text-gray-900">Administrator Side</h1>
-                            <p class="leading-relaxed text-gray-500">Panel management pengurus</p>
+                            <h1 class="title-font sm:text-3xl text-2xl mb-1 font-medium text-gray-900">Outlet Side</h1>
+                            <p class="leading-relaxed text-gray-500">Panel management Outlet</p>
                         </div>
                         <div className="xl:col-span-3 col-span-5">
                             <div class="flex flex-col">
@@ -44,9 +44,6 @@ export default class Administrator extends React.Component {
                                                         </th>
                                                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                             Status
-                                                        </th>
-                                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                            Option
                                                         </th>
                                                     </tr>
                                                 </thead>
