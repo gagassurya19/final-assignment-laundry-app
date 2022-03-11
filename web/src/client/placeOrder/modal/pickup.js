@@ -22,6 +22,17 @@ export default class Modal_pickup extends React.Component {
         }
     }
 
+    // ambil value dari sessionStorage
+    getSessionValue() {
+        if (sessionStorage.getItem("pickup_date") && sessionStorage.getItem("pickup_time")) {
+            this.setState({
+                selected_date: sessionStorage.getItem("pickup_date"),
+                selected_time: sessionStorage.getItem("pickup_time"),
+            }
+            );
+        }
+    }
+
     toggleModal = (isOpen) => {
         if (isOpen) {
             this.setState({ modal: "flex" })
@@ -43,6 +54,7 @@ export default class Modal_pickup extends React.Component {
 
     componentDidMount() {
         this.deleteInputDatePicker()
+        this.getSessionValue()
     }
 
     render() {
@@ -106,7 +118,8 @@ export default class Modal_pickup extends React.Component {
                                     }}
                                     onChange={date => {
                                         this.setState({ date });
-                                        this.setState({ selected_date: date[0].toLocaleDateString() })
+                                        this.setState({ selected_date: date[0].toLocaleDateString() });
+                                        sessionStorage.setItem("pickup_date", this.state.selected_date);
                                     }}
                                 />
                                 <h3 class="text-lg font-medium leading-6 text-gray-900 mt-5">Select Time: {this.state.selected_time}</h3>
@@ -123,7 +136,8 @@ export default class Modal_pickup extends React.Component {
                                     }}
                                     onChange={time => {
                                         this.setState({ time });
-                                        this.setState({ selected_time: time[0].toLocaleTimeString() })
+                                        this.setState({ selected_time: time[0].toLocaleTimeString() });
+                                        sessionStorage.setItem("pickup_time", this.state.selected_time);
                                     }}
                                 />
                             </div>

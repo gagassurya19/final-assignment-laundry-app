@@ -5,7 +5,7 @@ export default class LoginRegister extends React.Component {
     constructor() {
         super()
         this.state = {
-            no_wa: "",
+            nomor_hp: sessionStorage.getItem('nomor_hp'),
             password: "",
             message: "",
             logged: true,
@@ -49,7 +49,8 @@ export default class LoginRegister extends React.Component {
                                 </div>
                                 <div class="col-span-6 sm:col-span-3">
                                     <label for="country" class="block text-sm font-medium text-gray-700">No. HP</label>
-                                    <input type="text" name="number-hp" id="number-hp" autocomplete="number-hp" placeholder="+62" class="border p-2 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" />
+                                    <input type="text" name="number-hp" id="number-hp" autocomplete="number-hp" placeholder="+62" class="border p-2 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" 
+                                    value={this.state.nomor_hp}/>
                                 </div>
                                 <div class="col-span-6 sm:col-span-3">
                                     <label for="password" class="block text-sm font-medium text-gray-700">Password</label>

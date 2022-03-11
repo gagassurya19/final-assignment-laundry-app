@@ -7,8 +7,33 @@ export default class Payment extends React.Component {
     constructor() {
         super()
         this.state = {
-            paylater: true
+            paylater: false,
+            dataSessionTransaction: {
+                id_address_customer: this.addSession('addressIndex'),
+                id_package: this.addSession('packageIndex'),
+                id_outlet: this.addSession('outletIndex'),
+                id_payment: this.addSession('paymentIndex'),
+                pickup_date: this.addSession('pickup_date'),
+                pickup_time: this.addSession('pickup_time'),
+                drop_date: this.addSession('drop_date'),
+                drop_time: this.addSession('drop_time'),
+                laundry_notes: this.addSession('laundryNotes'),
+                driver_notes: this.addSession('driverNotes'),
+            }
         }
+        console.log(this.state.dataSessionTransaction);
+    }
+
+    addSession = (item) => {
+        return sessionStorage.getItem(item)
+    }
+
+    submitTransaction = (ev) => {
+        ev.preventDefault();
+        window.sessionStorage.clear();
+        const a = "INV-2019-01-01-001";
+        window.sessionStorage.setItem('invoice', a);
+        window.location = `/order/done/`;
     }
     render() {
         return (
@@ -32,16 +57,17 @@ export default class Payment extends React.Component {
                                 <Link to="/order/done" className='mx-1'>
                                     <button class="flex justify-center font-bold text-white bg-indigo-500 border-0 focus:outline-none hover:bg-indigo-600 rounded text-base w-full p-2">
                                         {/* <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> */}
-                                        Pay Later & Save
+                                        Pay later & Save
                                     </button>
                                 </Link>
                             ) : (
-                                <Link to="/order/done" className='mx-1'>
-                                    <button class="flex justify-center font-bold text-white bg-indigo-500 border-0 focus:outline-none hover:bg-indigo-600 rounded text-base w-full p-2">
+                                <div className='mx-1'>
+                                    <button class="flex justify-center font-bold text-white bg-indigo-500 border-0 focus:outline-none hover:bg-indigo-600 rounded text-base w-full p-2"
+                                    onClick={ev => this.submitTransaction(ev)}>
                                         {/* <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> */}
-                                        Save
+                                        Pay & Save
                                     </button>
-                                </Link>
+                                </div>
                             )}
 
                         </div>

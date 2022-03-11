@@ -3,9 +3,10 @@ import { Link } from 'react-router-dom';
 import { NavbarClient, Timeline, Footer, Modal } from '../../../components';
 
 import Modal_address from '../modal/address';
-import Modal_ordertype from '../modal/ordertype';
+import Modal_ordertype from '../modal/package';
 import Modal_pickup from '../modal/pickup';
 import Modal_dropoff from '../modal/dropoff';
+import Modal_outlet from '../modal/outlet';
 
 export default class PickDrop extends React.Component {
     constructor() {
@@ -21,7 +22,8 @@ export default class PickDrop extends React.Component {
                         <p class="mb-8 leading-relaxed text-gray-500">A Laundryku driver will pickup your laundry</p>
                         <div class="w-full my-11">
                             <Modal_address />
-                            {/* <Modal_ordertype /> */}
+                            <Modal_ordertype />
+                            <Modal_outlet />
                             <Modal_pickup />
                             <Modal_dropoff />
                         </div>
