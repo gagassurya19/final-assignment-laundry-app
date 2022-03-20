@@ -5,7 +5,43 @@ import { Footer } from "../../components";
 import promo from '../../assets/image/promo_imlek.png';
 import freespace from '../../assets/image/ads_freespace.png';
 
+
 export default class Dashboard extends React.Component {
+    dataDummy = [
+        {
+            id: 1,
+            invoice: 'INV20190101',
+            pickup: '10/10/2019',
+            dropoff: '10/10/2019',
+            payment: 'Bank BCA',
+            status: true,
+        },
+        {
+            id: 2,
+            invoice: 'INV20190102',
+            pickup: '10/10/2019',
+            dropoff: '10/10/2019',
+            payment: 'Bank Mandiri',
+            status: false,
+        },
+    ];
+
+    today = () => {
+        const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+        const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+        const current = new Date();
+        const date = `${weekday[current.getUTCDay()]}, ${current.getDate()} ${month[current.getUTCMonth()]} ${current.getFullYear()}`;
+        return date
+    }
+
+    goToInvoice = (dataInvoice) => {
+        window.location = `/order/${dataInvoice}`;
+    }
+
+    componentDidMount() { 
+        this.today();
+     }
+
     render() {
         return (
             <>
@@ -35,7 +71,7 @@ export default class Dashboard extends React.Component {
                                     <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                         <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
                                     </svg>
-                                    Today: January 9, 2020
+                                    Today: {this.today()}
                                 </div>
                             </div>
                         </div>
@@ -98,9 +134,6 @@ export default class Dashboard extends React.Component {
                                                             Invoice
                                                         </th>
                                                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                            Details
-                                                        </th>
-                                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                             Date
                                                         </th>
                                                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -112,37 +145,48 @@ export default class Dashboard extends React.Component {
                                                     </tr>
                                                 </thead>
                                                 <tbody class="bg-white divide-y divide-gray-200">
-                                                    {[...Array(5)].map((x, i) => (
+                                                    {this.dataDummy.map((data, index) => (
                                                         <tr>
                                                             <td class="px-6 py-4 whitespace-nowrap">
                                                                 <div class="text-sm text-gray-900">
-                                                                    {++i}
+                                                                    {++index}
                                                                 </div>
                                                             </td>
                                                             <td class="px-6 py-4 whitespace-nowrap">
                                                                 <div class="text-sm text-gray-900">
-                                                                    INV09134134134
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div class="text-sm text-gray-900">
-                                                                    ini details
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div class="text-sm text-gray-900">
-                                                                    {/* {item.siswa.length} */} test
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div class="text-sm text-gray-900">
-                                                                    {/* {item.createdAt} */} test
+                                                                    <button className="hover:underline inline-flex items-center text-sm font-medium text-blue-500 hover:opacity-75 "
+                                                                        onClick={() => this.goToInvoice(data.invoice)}>
+                                                                        {data.invoice}
+                                                                        <svg class="ml-0.5 h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                                            <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path>
+                                                                            <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path>
+                                                                        </svg>
+                                                                    </button>
                                                                 </div>
                                                             </td>
                                                             <td class="px-6 py-4 whitespace-nowrap">
-                                                                <span class="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-200 dark:text-green-900">Green</span>
-                                                                <span class="bg-yellow-100 text-yellow-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-yellow-200 dark:text-yellow-900">Yellow</span>
-                                                                <span class="bg-red-100 text-red-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-red-200 dark:text-red-900">Red</span>
+                                                                <div class="text-sm text-gray-900">
+                                                                    Pickup: {data.pickup} <br></br>
+                                                                    Dropoff: {data.dropoff}
+                                                                </div>
+                                                            </td>
+                                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                                <div class="text-sm text-gray-900">
+                                                                    <label class="inline-flex relative items-center w-full text-sm font-medium focus:z-10 focus:ring-2">
+                                                                        <svg class="h-8 w-8 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+                                                                        <span class="flex flex-col text-left pl-2">
+                                                                            <span class="title-font font-medium text-gray-900">{data.payment}</span>
+                                                                            <span class="text-gray-500 text-sm">{data.payment}</span>
+                                                                        </span>
+                                                                    </label>
+                                                                </div>
+                                                            </td>
+                                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                                {data.status ? (
+                                                                    <span class="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-200 dark:text-green-900">Selesai</span>
+                                                                ) : (
+                                                                    <span class="bg-yellow-100 text-yellow-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-yellow-200 dark:text-yellow-900">Proses</span>
+                                                                )}
                                                             </td>
                                                         </tr>
                                                     ))}

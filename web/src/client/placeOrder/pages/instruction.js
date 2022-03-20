@@ -11,6 +11,16 @@ export default class Instruction extends React.Component {
                 driver: ''
             }
         }
+        if (sessionStorage.getItem('addressIndex') &&
+            sessionStorage.getItem('packageIndex') &&
+            sessionStorage.getItem('outletIndex') &&
+            sessionStorage.getItem('pickup_date') &&
+            sessionStorage.getItem('pickup_time') &&
+            sessionStorage.getItem('drop_date') &&
+            sessionStorage.getItem('drop_time')) {
+            } else {
+            window.location = '/order/pick_drop';
+        }
     }
 
     // ambil value dari sessionStorage

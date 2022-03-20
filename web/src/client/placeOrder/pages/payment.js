@@ -1,8 +1,11 @@
-import { NavbarClient, Timeline, Footer } from '../../../components';
-
-import { Link } from 'react-router-dom';
-import Modal_payment from '../modal/payment';
 import React from 'react';
+import { Link } from 'react-router-dom';
+
+import Modal_payment from '../modal/payment';
+import { Timeline, Footer } from '../../../components';
+
+import Swal from 'sweetalert2';
+
 export default class Payment extends React.Component {
     constructor() {
         super()
@@ -21,7 +24,16 @@ export default class Payment extends React.Component {
                 driver_notes: this.addSession('driverNotes'),
             }
         }
-        console.log(this.state.dataSessionTransaction);
+        if (sessionStorage.getItem('addressIndex') &&
+            sessionStorage.getItem('packageIndex') &&
+            sessionStorage.getItem('outletIndex') &&
+            sessionStorage.getItem('pickup_date') &&
+            sessionStorage.getItem('pickup_time') &&
+            sessionStorage.getItem('drop_date') &&
+            sessionStorage.getItem('drop_time')) {
+            } else {
+            window.location = '/order/pick_drop';
+        }
     }
 
     addSession = (item) => {
@@ -30,11 +42,31 @@ export default class Payment extends React.Component {
 
     submitTransaction = (ev) => {
         ev.preventDefault();
-        window.sessionStorage.clear();
-        const a = "INV-2019-01-01-001";
-        window.sessionStorage.setItem('invoice', a);
-        window.location = `/order/done/`;
+        if (sessionStorage.getItem('paymentIndex') === null) {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener('mouseenter', Swal.stopTimer)
+                  toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+              })
+              
+              Toast.fire({
+                icon: 'warning',
+                title: 'Please complete the form below.'
+              })
+        } else {
+            window.sessionStorage.clear();
+            const a = "INV-2019-01-01-001";
+            window.sessionStorage.setItem('invoice', a);
+            window.location = `/order/done/`;
+        }
     }
+
     render() {
         return (
             <>

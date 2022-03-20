@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { NavbarClient, Timeline, Footer, Modal } from '../../../components';
+import { Timeline, Footer, Modal } from '../../../components';
+
+import Swal from 'sweetalert2'
 
 import Modal_address from '../modal/address';
 import Modal_ordertype from '../modal/package';
@@ -11,6 +13,35 @@ import Modal_outlet from '../modal/outlet';
 export default class PickDrop extends React.Component {
     constructor() {
         super()
+    }
+
+    checkValid(ev) {
+        if (sessionStorage.getItem('addressIndex') &&
+            sessionStorage.getItem('packageIndex') &&
+            sessionStorage.getItem('outletIndex') &&
+            sessionStorage.getItem('pickup_date') &&
+            sessionStorage.getItem('pickup_time') &&
+            sessionStorage.getItem('drop_date') &&
+            sessionStorage.getItem('drop_time')) {
+            window.location = '/order/instruction';
+        } else {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener('mouseenter', Swal.stopTimer)
+                  toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+              })
+              
+              Toast.fire({
+                icon: 'warning',
+                title: 'Please complete the form below.'
+              })
+        }
     }
     render() {
         return (
@@ -35,12 +66,13 @@ export default class PickDrop extends React.Component {
                                     Back
                                 </button>
                             </Link>
-                            <Link to="/order/instruction" className='mx-1'>
-                                <button class="flex justify-center font-bold text-white bg-indigo-500 border-0 focus:outline-none hover:bg-indigo-600 rounded text-base w-full p-2">
+                            <div className='mx-1'>
+                                <button class="flex justify-center font-bold text-white bg-indigo-500 border-0 focus:outline-none hover:bg-indigo-600 rounded text-base w-full p-2"
+                                    onClick={ev => this.checkValid(ev)}>
                                     {/* <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> */}
                                     Next
                                 </button>
-                            </Link>
+                            </div>
                         </div>
                     </div>
                     <Footer />

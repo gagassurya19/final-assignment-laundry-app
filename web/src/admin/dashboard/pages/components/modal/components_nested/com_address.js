@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal } from "../../../components";
+import { Modal } from "../../../../../../components";
 
 import Swal from 'sweetalert2';
 
@@ -114,6 +114,7 @@ export default class Address extends React.Component {
                         </div>
                     </div>
                 ))}
+                
                 <button type="button" className="mt-10 w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
                     onClick={() => { this.toggleModal(true) }}>
                     Add Address

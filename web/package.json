@@ -29,6 +29,8 @@
     "react-scripts": "5.0.0",
     "react-timeit": "^1.1.11",
     "sassy-datepicker": "^0.8.0",
+    "sweetalert2": "^11.4.4",
+    "sweetalert2-react-content": "^4.2.0",
     "tw-elements": "^1.0.0-alpha11",
     "web-vitals": "^2.1.3"
   },

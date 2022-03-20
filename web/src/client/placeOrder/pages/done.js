@@ -9,6 +9,10 @@ export default class Done extends React.Component {
             isSuccess: true,
             invoice: sessionStorage.getItem('invoice'),
         }
+        if (!sessionStorage.getItem('invoice')) {
+            alert('You don\'t have an invoice, please complete the previous steps before proceeding to the next step.')
+            window.location = '/order/pick_drop';
+        }
     }
     render() {
         return (
@@ -41,7 +45,7 @@ export default class Done extends React.Component {
                                     <h3 class="text-lg font-medium text-red-700 dark:text-red-800">Your Transaction is Fail</h3>
                                 </div>
                                 <div class="mt-2 mb-4 text-sm text-red-700 dark:text-red-800">
-                                    Please try again. 
+                                    Please try again.
                                 </div>
                                 <div class="flex">
                                     <Link to="/order" type="Button" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 text-center inline-flex items-center dark:bg-red-800 dark:hover:bg-red-900">
