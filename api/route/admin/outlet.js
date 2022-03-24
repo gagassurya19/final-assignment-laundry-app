@@ -12,6 +12,10 @@ app.use(express.json())
 const verify = require("../middleware/admin/auth_verify")
 app.use(verify)
 
+// middleware, autentikasi role [admin, kasir, owner]
+const authGetAccess = require("../permissions/auth_management").authGetAccess
+app.use(authGetAccess)
+
 // Bagian CRUD [Create, Read, Update, Delete]
 // Get data
 app.get('/', async (req, res) => {

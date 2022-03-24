@@ -12,6 +12,10 @@ app.use(express.json())
 const verify = require("../middleware/admin/auth_verify")
 app.use(verify)
 
+// middleware, autentikasi role [admin, kasir, owner]
+const authGetAccess = require("../permissions/auth_management").authGetAccess
+app.use(authGetAccess)
+
 // Bagian CRUD [Create, Read, Update, Delete]
 // Get data
 app.get('/', async (req, res) => {
@@ -58,7 +62,7 @@ app.get('/:id', async (req, res) => {
 })
 
 // Add data
-app.post('/', async (req, res) => {
+app.post('/', authGetAccess, async (req, res) => {
     // Deklarasi semua variable dalam table database member
     let data = {
         id_customer: req.body.id_customer,

@@ -15,7 +15,9 @@ app.use(verify)
 // Bagian CRUD [Create, Read, Update, Delete]
 // Get data
 app.get('/', async (req, res) => {
-    transaction.findAll()
+    transaction.findAll({
+        include:[{ allNested: true }]
+    })
         .then(result => {
             res.json({
                 data_transaction: result,
