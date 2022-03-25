@@ -46,6 +46,7 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     sequelize,
+    modelName: 'customer',
     tableName: 'customer',
     timestamps: false,
     indexes: [

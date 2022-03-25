@@ -27,7 +27,7 @@ app.get('/:id', async (req, res) => {
     let params = {
         id_customer: req.params.id
     }
-    customer.findAll({where: params})
+    customer.findAll({where: params, include: [{ all: true, nested: true }] })
         .then(result => {
             if(result.length == 0) {
                 res.json({

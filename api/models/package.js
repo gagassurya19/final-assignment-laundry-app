@@ -22,6 +22,7 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     sequelize,
+    modelName: 'package',
     tableName: 'package',
     timestamps: false,
     indexes: [

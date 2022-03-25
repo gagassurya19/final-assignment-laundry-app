@@ -29,7 +29,7 @@ app.use(authGetAccess)
 // Bagian CRUD [Create, Read, Update, Delete]
 // Get data
 app.get('/', async (req, res) => {
-    administrator.findAll()
+    administrator.findAll({ include: [{ all: true, nested: true }] })
         .then(result => {
             res.json({
                 data_administrator: result,
@@ -49,7 +49,7 @@ app.get('/:id', async (req, res) => {
     let params = {
         id_administrator: req.params.id
     }
-    administrator.findAll({where: params})
+    administrator.findAll({ where: params, include: [{ all: true, nested: true }] })
         .then(result => {
             if(result.length == 0) {
                 res.json({

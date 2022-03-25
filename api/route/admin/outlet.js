@@ -19,7 +19,7 @@ app.use(authGetAccess)
 // Bagian CRUD [Create, Read, Update, Delete]
 // Get data
 app.get('/', async (req, res) => {
-    outlet.findAll()
+    outlet.findAll({ include: [{ all: true, nested: true }] })
         .then(result => {
             res.json({
                 data_outlet: result,
@@ -39,7 +39,7 @@ app.get('/:id', async (req, res) => {
     let params = {
         id_outlet: req.params.id
     }
-    outlet.findAll({where: params})
+    outlet.findAll({ where: params, include: [{ all: true, nested: true }] })
         .then(result => {
             if(result.length == 0) {
                 res.json({

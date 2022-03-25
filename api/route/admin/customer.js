@@ -29,7 +29,7 @@ const encrypt = (nakedText) => {
 // Bagian CRUD [Create, Read, Update, Delete]
 // Get data
 app.get('/', async (req, res) => {
-    customer.findAll()
+    customer.findAll({ include: [{ all: true, nested: true }] })
         .then(result => {
             res.json({
                 data_customer: result,
@@ -49,7 +49,7 @@ app.get('/:id', async (req, res) => {
     let params = {
         id_customer: req.params.id
     }
-    customer.findAll({where: params})
+    customer.findAll({ where: params, include: [{ all: true, nested: true }] })
         .then(result => {
             if(result.length == 0) {
                 res.json({

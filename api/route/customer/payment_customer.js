@@ -15,7 +15,7 @@ app.use(verify)
 // Bagian CRUD [Create, Read, Update, Delete]
 // Get data
 app.get('/', async (req, res) => {
-    payment_customer.findAll()
+    payment_customer.findAll({ include: [{ all: true, nested: true }] })
         .then(result => {
             res.json({
                 data_payment_customer: result,
@@ -35,7 +35,7 @@ app.get('/:id', async (req, res) => {
     let params = {
         id_payment_customer: req.params.id
     }
-    payment_customer.findAll({where: params})
+    payment_customer.findAll({where: params, include: [{ all: true, nested: true }] })
         .then(result => {
             if(result.length == 0) {
                 res.json({

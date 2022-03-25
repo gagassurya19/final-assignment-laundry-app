@@ -53,6 +53,7 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     sequelize,
+    modelName: 'administrator',
     tableName: 'administrator',
     timestamps: false,
     indexes: [

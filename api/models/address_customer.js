@@ -34,6 +34,7 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     sequelize,
+    modelName: 'address_customer',
     tableName: 'address_customer',
     timestamps: false,
     indexes: [
