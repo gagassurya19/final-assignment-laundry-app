@@ -12,23 +12,9 @@ app.use(express.json())
 const verify = require("../middleware/customer/auth_verify")
 app.use(verify)
 
-// Bagian CRUD [Create, Read, Update, Delete]
-// Get data
-app.get('/', async (req, res) => {
-    transaction.findAll({ include: [{ all: true, nested: true }] })
-        .then(result => {
-            res.json({
-                data_transaction: result,
-                found: true
-            })
-        })
-        .catch(error => {
-            res.json({
-                message: error.message,
-                found: false
-            })
-        })
-})
+// middleware, autentikasi role [admin, kasir, owner]
+const authGetAccess = require("../permissions/auth_management").authGetAccess
+app.use(authGetAccess)
 
 // Get data by id
 app.get('/:id', async (req, res) => {

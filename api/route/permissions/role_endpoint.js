@@ -1,7 +1,8 @@
 const ROLE = {
     ADMIN: 'admin',
     KASIR: 'kasir',
-    OWNER: 'owner'
+    OWNER: 'owner',
+    CUSTOMER: undefined
 }
 
 const GET = {
@@ -11,7 +12,11 @@ const GET = {
     "/admin_package": [ROLE.ADMIN],
     "/admin_address_customer": [ROLE.ADMIN, ROLE.KASIR],
     "/admin_payment_customer": [ROLE.ADMIN, ROLE.KASIR],
-    "/admin_transaction": [ROLE.ADMIN, ROLE.KASIR, ROLE.OWNER]
+    "/admin_transaction": [ROLE.ADMIN, ROLE.KASIR, ROLE.OWNER],
+    "/customer_address_customer": [ROLE.CUSTOMER],
+    "/customer_payment_customer": [ROLE.CUSTOMER],
+    "/customer_transaction": [ROLE.CUSTOMER],
+    "/customer_crud": [ROLE.CUSTOMER]
 }
 
 const POST = {
@@ -21,7 +26,11 @@ const POST = {
     "/admin_package": [ROLE.ADMIN],
     "/admin_address_customer": [ROLE.ADMIN, ROLE.KASIR],
     "/admin_payment_customer": [ROLE.ADMIN, ROLE.KASIR],
-    "/admin_transaction": [ROLE.ADMIN, ROLE.KASIR, ROLE.OWNER]
+    "/admin_transaction": [ROLE.ADMIN, ROLE.KASIR, ROLE.OWNER],
+    "/customer_address_customer": [ROLE.CUSTOMER],
+    "/customer_payment_customer": [ROLE.CUSTOMER],
+    "/customer_transaction": [ROLE.CUSTOMER],
+    "/customer_crud": [ROLE.CUSTOMER]
 }
 
 const PUT = {
@@ -31,7 +40,11 @@ const PUT = {
     "/admin_package": [ROLE.ADMIN],
     "/admin_address_customer": [ROLE.ADMIN, ROLE.KASIR],
     "/admin_payment_customer": [ROLE.ADMIN, ROLE.KASIR],
-    "/admin_transaction": [ROLE.ADMIN, ROLE.KASIR, ROLE.OWNER]
+    "/admin_transaction": [ROLE.ADMIN, ROLE.KASIR, ROLE.OWNER],
+    "/customer_address_customer": [ROLE.CUSTOMER],
+    "/customer_payment_customer": [ROLE.CUSTOMER],
+    "/customer_transaction": [ROLE.CUSTOMER],
+    "/customer_crud": [ROLE.CUSTOMER]
 }
 
 const DELETE = {
@@ -41,7 +54,11 @@ const DELETE = {
     "/admin_package": [ROLE.ADMIN],
     "/admin_address_customer": [ROLE.ADMIN, ROLE.KASIR],
     "/admin_payment_customer": [ROLE.ADMIN, ROLE.KASIR],
-    "/admin_transaction": [ROLE.ADMIN, ROLE.KASIR, ROLE.OWNER]
+    "/admin_transaction": [ROLE.ADMIN, ROLE.KASIR, ROLE.OWNER],
+    "/customer_address_customer": [ROLE.CUSTOMER],
+    "/customer_payment_customer": [ROLE.CUSTOMER],
+    "/customer_transaction": [ROLE.CUSTOMER],
+    "/customer_crud": [ROLE.CUSTOMER]
 }
 
 function canAccess(method, endpoint, role){
