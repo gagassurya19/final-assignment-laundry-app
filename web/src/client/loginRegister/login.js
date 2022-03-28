@@ -1,17 +1,68 @@
 import React from "react";
+import axios from 'axios';
 import { Link } from "react-router-dom";
 
-export default class LoginRegister extends React.Component {
+import Swal from 'sweetalert2';
+
+export default class Login extends React.Component {
     constructor() {
         super()
         this.state = {
-            no_wa: "",
-            password: "",
-            message: "",
-            logged: true,
-            token: ""
+            telephone: '123',
+            password: 'customer',
+            token: ''
+        }
+        // dapetin token dari localstorage
+        if (localStorage.getItem("token_customer")) {
+            window.location = "/home"
         }
     }
+
+    Login = event => {
+        event.preventDefault() // menghilangkan effect refreshpage
+
+        let data = {
+            telephone: this.state.telephone,
+            password: this.state.password
+        }
+
+        let url = process.env.REACT_APP_CUSTOMER_API_URL + "auth_customer"
+
+        axios.post(url, data)
+            .then(response => {
+                if(!response.data.isLogged) {
+                    this.Alert('error', response.data.message)
+                } else {
+                    localStorage.setItem('token_customer', response.data.token)
+                    localStorage.setItem('id_customer', response.data.data.id_customer)
+                    localStorage.setItem('register_date', response.data.data.register_date)
+                    localStorage.setItem('name_customer', response.data.data.first_name +" "+ response.data.data.last_name)
+                    this.Alert('success', 'Login berhasil. \nRedirect ke Dashboard')
+                    setTimeout(function () {
+                        window.location = '/home'
+                    }, 1600);
+                }
+            })
+            .catch(error => {
+                this.Alert('error', error)
+            })
+    }
+
+    Alert = (kind, message) => {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+        })
+
+        Toast.fire({
+            icon: kind,
+            title: message
+        })
+    }
+
     render() {
         return (
             <div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -25,19 +76,13 @@ export default class LoginRegister extends React.Component {
                                 Sign in to your account
                             </div>
                         </h2>
-                        {!this.state.logged ? (
-                            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative my-5 text-center" role="alert">
-                                <strong class="font-bold">Wadidaw! </strong>
-                                <span class="block sm:inline">{this.state.message}</span>
-                            </div>
-                        ) : null}
                     </div>
-                    <form class="mt-8 space-y-6" method="POST">
+                    <form class="mt-8 space-y-6" onSubmit={ev => this.Login(ev)}>
                         <div class="rounded-md shadow-sm -space-y-px">
                             <div>
                                 <label for="Nomor_Whatsapp" class="sr-only">Nomor Whatsapp</label>
                                 <input id="no_wa" name="no_wa" type="number" required class="appearance-none rounded-none relative block w-full px-3 py-2 border rounded-t-md border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="+62"
-                                    value={this.state.no_wa} onChange={ev => this.setState({ no_wa: ev.target.value })} />
+                                    value={this.state.telephone} onChange={ev => this.setState({ telephone: ev.target.value })} />
                             </div>
                             <div>
                                 <label for="password" class="sr-only">Password</label>

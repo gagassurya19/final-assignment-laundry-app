@@ -13,6 +13,10 @@ import Modal_outlet from '../modal/outlet';
 export default class PickDrop extends React.Component {
     constructor() {
         super()
+        // cek token dari localstorage
+        if (!localStorage.getItem("token_customer")) {
+            window.location = "/login"
+        }
     }
 
     checkValid(ev) {
@@ -32,15 +36,15 @@ export default class PickDrop extends React.Component {
                 timer: 3000,
                 timerProgressBar: true,
                 didOpen: (toast) => {
-                  toast.addEventListener('mouseenter', Swal.stopTimer)
-                  toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
                 }
-              })
-              
-              Toast.fire({
+            })
+
+            Toast.fire({
                 icon: 'warning',
                 title: 'Please complete the form below.'
-              })
+            })
         }
     }
     render() {

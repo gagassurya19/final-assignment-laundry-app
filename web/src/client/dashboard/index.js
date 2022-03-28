@@ -1,4 +1,7 @@
 import React from "react";
+import axios from 'axios';
+
+import Swal from 'sweetalert2';
 import { Link } from "react-router-dom";
 
 import { Footer } from "../../components";
@@ -7,24 +10,61 @@ import freespace from '../../assets/image/ads_freespace.png';
 
 
 export default class Dashboard extends React.Component {
-    dataDummy = [
-        {
-            id: 1,
-            invoice: 'INV20190101',
-            pickup: '10/10/2019',
-            dropoff: '10/10/2019',
-            payment: 'Bank BCA',
-            status: true,
-        },
-        {
-            id: 2,
-            invoice: 'INV20190102',
-            pickup: '10/10/2019',
-            dropoff: '10/10/2019',
-            payment: 'Bank Mandiri',
-            status: false,
-        },
-    ];
+    constructor(){
+        super();
+        this.state = {
+            token: localStorage.getItem('token_customer'),
+            id_customer: localStorage.getItem('id_customer'),
+            name_customer: localStorage.getItem('name_customer'),
+            data: [],
+            isFound: false
+        }
+        // cek token dari localstorage
+        if (!localStorage.getItem("token_customer")) {
+            window.location = "/login"
+        }
+    }
+
+    getDataTransaction = async () => {
+        const url = process.env.REACT_APP_CUSTOMER_API_URL + 'customer_transaction/' +  this.state.id_customer
+        
+        await axios.get(url,{
+            headers:{ 
+                Authorization: "Bearer " + this.state.token
+            }
+        })
+        .then(result => {
+            this.setState({
+                isFound: result.data.found
+            })
+
+            if(this.state.isFound){
+                this.setState({
+                    data: result.data.data_transaction
+                })
+            } else {
+                this.Alert('warning', 'Belum ada transaksi')
+            }
+        })
+        .catch(error => {
+            this.Alert('error', error.message)
+        })
+    }
+
+    Alert = (kind, message) => {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3500,
+            timerProgressBar: true,
+        })
+
+        Toast.fire({
+            icon: kind,
+            title: message
+        })
+    }
 
     today = () => {
         const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
@@ -40,6 +80,7 @@ export default class Dashboard extends React.Component {
 
     componentDidMount() { 
         this.today();
+        this.getDataTransaction();
      }
 
     render() {
@@ -49,7 +90,7 @@ export default class Dashboard extends React.Component {
                     <div className="lg:grid lg:grid-cols-5 grid-cols-none gap-3 mt-5 flex items-center justify-between">
                         <div className="col-span-4">
                             <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
-                                John Doe
+                                {this.state.name_customer.charAt(0).toUpperCase() + this.state.name_customer.slice(1)}
                             </h2>
                             <div class="mt-1 flex flex-col sm:flex-row sm:flex-wrap sm:mt-0 sm:space-x-6">
                                 <div class="mt-2 flex items-center text-sm text-gray-500">
@@ -145,7 +186,7 @@ export default class Dashboard extends React.Component {
                                                     </tr>
                                                 </thead>
                                                 <tbody class="bg-white divide-y divide-gray-200">
-                                                    {this.dataDummy.map((data, index) => (
+                                                    {this.state.data.map((data, index) => (
                                                         <tr>
                                                             <td class="px-6 py-4 whitespace-nowrap">
                                                                 <div class="text-sm text-gray-900">
@@ -155,8 +196,8 @@ export default class Dashboard extends React.Component {
                                                             <td class="px-6 py-4 whitespace-nowrap">
                                                                 <div class="text-sm text-gray-900">
                                                                     <button className="hover:underline inline-flex items-center text-sm font-medium text-blue-500 hover:opacity-75 "
-                                                                        onClick={() => this.goToInvoice(data.invoice)}>
-                                                                        {data.invoice}
+                                                                        onClick={() => this.goToInvoice(data.invoice_code)}>
+                                                                        {data.invoice_code.toUpperCase()}
                                                                         <svg class="ml-0.5 h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                                                             <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path>
                                                                             <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path>
@@ -166,8 +207,8 @@ export default class Dashboard extends React.Component {
                                                             </td>
                                                             <td class="px-6 py-4 whitespace-nowrap">
                                                                 <div class="text-sm text-gray-900">
-                                                                    Pickup: {data.pickup} <br></br>
-                                                                    Dropoff: {data.dropoff}
+                                                                    Pickup: {data.pickup_date} <br></br>
+                                                                    Dropoff: {data.drop_date}
                                                                 </div>
                                                             </td>
                                                             <td class="px-6 py-4 whitespace-nowrap">
@@ -175,8 +216,8 @@ export default class Dashboard extends React.Component {
                                                                     <label class="inline-flex relative items-center w-full text-sm font-medium focus:z-10 focus:ring-2">
                                                                         <svg class="h-8 w-8 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
                                                                         <span class="flex flex-col text-left pl-2">
-                                                                            <span class="title-font font-medium text-gray-900">{data.payment}</span>
-                                                                            <span class="text-gray-500 text-sm">{data.payment}</span>
+                                                                            <span class="title-font font-medium text-gray-900">{data.data_payment_customer.payment_name.toUpperCase()}</span>
+                                                                            <span class="text-gray-500 text-sm">{data.data_payment_customer.payment_bank_name.toUpperCase()}: {data.data_payment_customer.payment_number}</span>
                                                                         </span>
                                                                     </label>
                                                                 </div>

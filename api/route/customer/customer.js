@@ -11,11 +11,9 @@ app.use(express.json())
 
 // Middleware, Autentikasi user
 const verify = require("../middleware/customer/auth_verify")
-app.use(verify)
 
 // middleware, autentikasi role [admin, kasir, owner]
 const authGetAccess = require("../permissions/auth_management").authGetAccess
-app.use(authGetAccess)
 
 // Ambil konfig
 const secretKey = process.env.SECRETKEY;
@@ -27,7 +25,7 @@ const encrypt = (nakedText) => {
 }
 
 // Get data by id
-app.get('/:id', async (req, res) => {
+app.get('/:id', verify, authGetAccess, async (req, res) => {
     let params = {
         id_customer: req.params.id
     }
@@ -83,13 +81,12 @@ app.post('/', async (req, res) => {
 })
 
 // Update data
-app.put('/:id', async (req, res) => {
+app.put('/:id', verify, authGetAccess, async (req, res) => {
     let data = {
         first_name: req.body.first_name,
         last_name: req.body.last_name,
         telephone: req.body.telephone,
         email: req.body.email,
-        password: encrypt(req.body.password),
         photo_profile: req.body.photo_profile,
         register_date: req.body.register_date,
         status: req.body.status
@@ -97,6 +94,10 @@ app.put('/:id', async (req, res) => {
 
     let id = {
         id_customer: req.params.id
+    }
+
+    if(req.body.password){
+        data.password = encrypt(req.body.password)
     }
 
     customer.update(data, { where: id })
@@ -115,7 +116,7 @@ app.put('/:id', async (req, res) => {
 })
 
 // Delete data
-app.delete('/:id', async (req, res) => {
+app.delete('/:id', verify, authGetAccess, async (req, res) => {
     let id = {
         id_customer: req.params.id
     }

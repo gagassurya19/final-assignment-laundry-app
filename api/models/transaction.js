@@ -99,10 +99,15 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(255),
         allowNull: true,
         comment: "optional"
+      },
+      status: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: 0,
+        comment: "proses(0) & selesai(1)"
       }
     }, {
       sequelize,
-      modelName: 'transaction',
       tableName: 'transaction',
       timestamps: false,
       indexes: [

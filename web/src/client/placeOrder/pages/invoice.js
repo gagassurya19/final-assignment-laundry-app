@@ -44,6 +44,10 @@ export class Invoice extends Component {
                 total_price: 0,
             }
         }
+        // cek token dari localstorage
+        if (!localStorage.getItem("token_customer") && !localStorage.getItem("token_admin")) {
+            window.location = "/login"
+        }
     }
 
     totalPrice = () => {
@@ -56,28 +60,28 @@ export class Invoice extends Component {
 
     getPDF = (ev) => {
         ev.preventDefault();
-		var HTML_Width = $("article").width();
-		var HTML_Height = $("article").height();
-		var top_left_margin = 15;
-		var PDF_Width = HTML_Width+(top_left_margin*2);
-		var PDF_Height = (PDF_Width*1.5)+(top_left_margin*2);
-		var canvas_image_width = HTML_Width;
-		var canvas_image_height = HTML_Height;
-		var totalPDFPages = Math.ceil(HTML_Height/PDF_Height)-1;
+        var HTML_Width = $("article").width();
+        var HTML_Height = $("article").height();
+        var top_left_margin = 15;
+        var PDF_Width = HTML_Width + (top_left_margin * 2);
+        var PDF_Height = (PDF_Width * 1.5) + (top_left_margin * 2);
+        var canvas_image_width = HTML_Width;
+        var canvas_image_height = HTML_Height;
+        var totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
         const fromState = this.state.invoice;
 
-		html2canvas($("article")[0],{allowTaint:true}).then(function(canvas) {
-			canvas.getContext('2d');
-			var imgData = canvas.toDataURL("image/jpeg", 1.0);
-			var pdf = new jsPDF('p', 'pt',  [PDF_Width, PDF_Height]);
-		    pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin,canvas_image_width,canvas_image_height);
-			for (var i = 1; i <= totalPDFPages; i++) { 
-				pdf.addPage(PDF_Width, PDF_Height);
-				pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height*i)+(top_left_margin*4),canvas_image_width,canvas_image_height);
-			}
-		    pdf.save(`Laundryku-${fromState}.pdf`);
+        html2canvas($("article")[0], { allowTaint: true }).then(function (canvas) {
+            canvas.getContext('2d');
+            var imgData = canvas.toDataURL("image/jpeg", 1.0);
+            var pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
+            pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin, canvas_image_width, canvas_image_height);
+            for (var i = 1; i <= totalPDFPages; i++) {
+                pdf.addPage(PDF_Width, PDF_Height);
+                pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height * i) + (top_left_margin * 4), canvas_image_width, canvas_image_height);
+            }
+            pdf.save(`Laundryku-${fromState}.pdf`);
         });
-	};
+    };
 
     componentDidMount() {
         this.setState({ invoice: this.props.params.invoice })
@@ -130,10 +134,10 @@ export class Invoice extends Component {
                                                 </div>
                                                 <div>
                                                     <a href="#generate-invoice-pdf" target="_blank" class="inline-flex items-center text-sm font-medium text-blue-500 hover:opacity-75 "
-                                                    onClick={ev => this.getPDF(ev)}> Download PDF <svg class="ml-0.5 h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                        <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path>
-                                                        <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path>
-                                                    </svg>
+                                                        onClick={ev => this.getPDF(ev)}> Download PDF <svg class="ml-0.5 h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                            <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path>
+                                                            <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path>
+                                                        </svg>
                                                     </a>
                                                 </div>
                                             </div>
@@ -161,28 +165,28 @@ export class Invoice extends Component {
                                         </tr>
                                     </thead>
                                     <tbody class="divide-y divide-gray-200">
-                                        {this.state.body.items.map((data, index) => 
-                                            (
-                                                <tr>
-                                                    <td class="px-9 py-5 whitespace-nowrap space-x-1 flex items-center">
-                                                        <div>
-                                                            <p> {data.item_name} </p>
-                                                            <p class="text-sm text-gray-400"> ID: {data.id} </p>
-                                                        </div>
-                                                    </td>
-                                                    <td class="whitespace-nowrap text-gray-600 truncate">  </td>
-                                                    <td class="whitespace-nowrap text-gray-600 truncate"> 
-                                                        <span class="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-200 dark:text-green-900">Diproses</span>
-                                                    </td>
-                                                    <td class="whitespace-nowrap space-x-1 flex items-center">
-                                                        <div>
-                                                            <p> Pickup: {data.pickup_date} </p>
-                                                            <p class="text-sm text-gray-400"> Dropoff: {data.drop_date} </p>
-                                                        </div>
-                                                    </td>
-                                                    <td class="whitespace-nowrap text-gray-600 truncate"> Rp{data.item_price} </td>
-                                                </tr>
-                                            )
+                                        {this.state.body.items.map((data, index) =>
+                                        (
+                                            <tr>
+                                                <td class="px-9 py-5 whitespace-nowrap space-x-1 flex items-center">
+                                                    <div>
+                                                        <p> {data.item_name} </p>
+                                                        <p class="text-sm text-gray-400"> ID: {data.id} </p>
+                                                    </div>
+                                                </td>
+                                                <td class="whitespace-nowrap text-gray-600 truncate">  </td>
+                                                <td class="whitespace-nowrap text-gray-600 truncate">
+                                                    <span class="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-200 dark:text-green-900">Diproses</span>
+                                                </td>
+                                                <td class="whitespace-nowrap space-x-1 flex items-center">
+                                                    <div>
+                                                        <p> Pickup: {data.pickup_date} </p>
+                                                        <p class="text-sm text-gray-400"> Dropoff: {data.drop_date} </p>
+                                                    </div>
+                                                </td>
+                                                <td class="whitespace-nowrap text-gray-600 truncate"> Rp{data.item_price} </td>
+                                            </tr>
+                                        )
                                         )}
                                     </tbody>
                                 </table>

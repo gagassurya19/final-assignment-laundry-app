@@ -107,7 +107,6 @@ app.put('/:id', async (req, res) => {
         last_name: req.body.last_name,
         telephone: req.body.telephone,
         email: req.body.email,
-        password: encrypt(req.body.password),
         photo_profile: req.body.photo_profile,
         register_date: req.body.register_date,
         status: req.body.status
@@ -115,6 +114,10 @@ app.put('/:id', async (req, res) => {
 
     let id = {
         id_customer: req.params.id
+    }
+
+    if(req.body.password){
+        data.password = encrypt(req.body.password)
     }
 
     customer.update(data, { where: id })

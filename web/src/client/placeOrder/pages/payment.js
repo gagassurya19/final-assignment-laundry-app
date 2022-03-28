@@ -24,6 +24,11 @@ export default class Payment extends React.Component {
                 driver_notes: this.addSession('driverNotes'),
             }
         }
+        // cek token dari localstorage
+        if (!localStorage.getItem("token_customer")) {
+            window.location = "/login"
+        }
+        
         if (sessionStorage.getItem('addressIndex') &&
             sessionStorage.getItem('packageIndex') &&
             sessionStorage.getItem('outletIndex') &&
@@ -31,7 +36,7 @@ export default class Payment extends React.Component {
             sessionStorage.getItem('pickup_time') &&
             sessionStorage.getItem('drop_date') &&
             sessionStorage.getItem('drop_time')) {
-            } else {
+        } else {
             window.location = '/order/pick_drop';
         }
     }
@@ -50,15 +55,15 @@ export default class Payment extends React.Component {
                 timer: 3000,
                 timerProgressBar: true,
                 didOpen: (toast) => {
-                  toast.addEventListener('mouseenter', Swal.stopTimer)
-                  toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
                 }
-              })
-              
-              Toast.fire({
+            })
+
+            Toast.fire({
                 icon: 'warning',
                 title: 'Please complete the form below.'
-              })
+            })
         } else {
             window.sessionStorage.clear();
             const a = "INV-2019-01-01-001";
@@ -95,7 +100,7 @@ export default class Payment extends React.Component {
                             ) : (
                                 <div className='mx-1'>
                                     <button class="flex justify-center font-bold text-white bg-indigo-500 border-0 focus:outline-none hover:bg-indigo-600 rounded text-base w-full p-2"
-                                    onClick={ev => this.submitTransaction(ev)}>
+                                        onClick={ev => this.submitTransaction(ev)}>
                                         {/* <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> */}
                                         Pay & Save
                                     </button>

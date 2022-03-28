@@ -75,7 +75,8 @@ app.post('/', async (req, res) => {
         pickup_date: req.body.pickup_date,
         drop_date: req.body.drop_date,
         notes_laundry: req.body.notes_laundry,
-        notes_driver: req.body.notes_driver
+        notes_driver: req.body.notes_driver,
+        status: req.body.status
     }
 
     transaction.create(data)
@@ -107,7 +108,8 @@ app.put('/:id', async (req, res) => {
         pickup_date: req.body.pickup_date,
         drop_date: req.body.drop_date,
         notes_laundry: req.body.notes_laundry,
-        notes_driver: req.body.notes_driver
+        notes_driver: req.body.notes_driver,
+        status: req.body.status
     }
 
     let id = {

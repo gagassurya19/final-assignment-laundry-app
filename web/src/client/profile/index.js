@@ -7,6 +7,17 @@ import Address from './components/address';
 import Payment from './components/payment';
 
 export default class Profile extends React.Component {
+    constructor(){
+        super();
+        this.state = {
+            register_date: localStorage.getItem('register_date')
+        }
+       // cek token dari localstorage
+       if (!localStorage.getItem("token_customer")) {
+        window.location = "/login"
+    }
+    }
+
     render() {
         return (
             <>
@@ -34,7 +45,7 @@ export default class Profile extends React.Component {
                                     </li>
                                     <li class="flex items-center py-3">
                                         <span>Member since</span>
-                                        <span class="ml-auto">Nov 07, 2016</span>
+                                        <span class="ml-auto">{this.state.register_date}</span>
                                     </li>
                                 </ul>
                             </div>

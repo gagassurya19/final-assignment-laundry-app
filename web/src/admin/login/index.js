@@ -14,9 +14,8 @@ export default class Login extends React.Component {
             token: ""
         }
         // dapetin token dari localstorage
-        if (localStorage.getItem("token")) {
-            this.state.token = localStorage.getItem("token")
-            window.location = "/"
+        if (localStorage.getItem("token_admin")) {
+            window.location = "/admin"
         }
     }
     render() {

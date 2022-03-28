@@ -9,6 +9,11 @@ export default class Done extends React.Component {
             isSuccess: true,
             invoice: sessionStorage.getItem('invoice'),
         }
+        // cek token dari localstorage
+        if (!localStorage.getItem("token_customer")) {
+            window.location = "/login"
+        }
+        
         if (!sessionStorage.getItem('invoice')) {
             alert('You don\'t have an invoice, please complete the previous steps before proceeding to the next step.')
             window.location = '/order/pick_drop';

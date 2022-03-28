@@ -6,7 +6,7 @@ export default class Hero extends React.Component {
     constructor() {
         super()
         this.state = {
-            nomor_hp: 0,
+            telephone: 0,
         }
         this.onValueChange = this.onValueChange.bind(this);
     }
@@ -14,9 +14,9 @@ export default class Hero extends React.Component {
     // ambil value dari data radio button
     async onValueChange(event) {
         await this.setState({
-            nomor_hp: event.target.value
+            telephone: event.target.value
         });
-        await sessionStorage.setItem('nomor_hp', this.state.nomor_hp);
+        await sessionStorage.setItem('telephone', this.state.telephone);
     }
     
     render(){

@@ -19,7 +19,7 @@ app.use(authGetAccess)
 // Get data by id
 app.get('/:id', async (req, res) => {
     let params = {
-        id_transaction: req.params.id
+        id_customer: req.params.id
     }
     transaction.findAll({where: params, include: [{ all: true, nested: true }] })
         .then(result => {
@@ -57,7 +57,8 @@ app.post('/', async (req, res) => {
         pickup_date: req.body.pickup_date,
         drop_date: req.body.drop_date,
         notes_laundry: req.body.notes_laundry,
-        notes_driver: req.body.notes_driver
+        notes_driver: req.body.notes_driver,
+        status: req.body.status
     }
 
     transaction.create(data)
@@ -89,7 +90,8 @@ app.put('/:id', async (req, res) => {
         pickup_date: req.body.pickup_date,
         drop_date: req.body.drop_date,
         notes_laundry: req.body.notes_laundry,
-        notes_driver: req.body.notes_driver
+        notes_driver: req.body.notes_driver,
+        status: req.body.status
     }
 
     let id = {

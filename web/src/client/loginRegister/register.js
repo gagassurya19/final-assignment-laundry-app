@@ -1,17 +1,67 @@
 import React from "react";
+import axios from 'axios';
 import { Link } from "react-router-dom";
+import Swal from 'sweetalert2';
 
-export default class LoginRegister extends React.Component {
+export default class Register extends React.Component {
     constructor() {
         super()
         this.state = {
-            nomor_hp: sessionStorage.getItem('nomor_hp'),
-            password: "",
-            message: "",
-            logged: true,
-            token: ""
+            first_name: '',
+            last_name: '',
+            telephone: sessionStorage.getItem('telephone'),
+            email: '',
+            password: '',
+            status: true
+        }
+        // dapetin token dari localstorage
+        if (localStorage.getItem("token_customer")) {
+            window.location = "/home"
         }
     }
+
+    Register = event => {
+        event.preventDefault() // menghilangkan effect refreshpage
+
+        let data = {
+            first_name: this.state.first_name,
+            last_name: this.state.last_name,
+            telephone: this.state.telephone,
+            email: this.state.email,
+            password: this.state.password,
+            role: this.state.role,
+            status: this.state.status
+        }
+
+        let url = process.env.REACT_APP_CUSTOMER_API_URL + "customer_crud"
+
+        axios.post(url, data)
+            .then(response => {
+                this.Alert('success', response.data.message + "\nSilahkan Login.")
+                setTimeout(function () {
+                    window.location = '/login'
+                }, 1600);
+            })
+            .catch(error => {
+                this.Alert('error', error)
+            })
+    }
+
+    Alert = (kind, message) => {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+        })
+
+        Toast.fire({
+            icon: kind,
+            title: message
+        })
+    }
+
     render() {
         return (
             <div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -25,32 +75,34 @@ export default class LoginRegister extends React.Component {
                                 Laundry App
                             </div>
                         </h2>
-                        {!this.state.logged ? (
-                            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative my-5 text-center" role="alert">
-                                <strong class="font-bold">Wadidaw! </strong>
-                                <span class="block sm:inline">{this.state.message}</span>
-                            </div>
-                        ) : null}
                     </div>
-                    <form class="mt-8 space-y-6" method="POST">
+                    <form class="mt-8 space-y-6" onSubmit={ev => this.Register(ev)}>
                         <div className="border rounded-lg p-6 bg-white">
                             <div class="grid grid-cols-6 gap-6">
                                 <div class="col-span-6 sm:col-span-3">
                                     <label for="first-name" class="block text-sm font-medium text-gray-700">First name</label>
-                                    <input type="text" name="first-name" id="first-name" autocomplete="given-name" class="border p-2 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" />
+                                    <input type="text" name="first-name" id="first-name" autocomplete="given-name" class="border p-2 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                        required
+                                        onChange={ev => this.setState({ first_name: ev.target.value })} />
                                 </div>
                                 <div class="col-span-6 sm:col-span-3">
                                     <label for="last-name" class="block text-sm font-medium text-gray-700">Last name</label>
-                                    <input type="text" name="last-name" id="last-name" autocomplete="family-name" class="border p-2 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" />
+                                    <input type="text" name="last-name" id="last-name" autocomplete="family-name" class="border p-2 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                        required
+                                        onChange={ev => this.setState({ last_name: ev.target.value })} />
                                 </div>
                                 <div class="col-span-6">
                                     <label for="email-address" class="block text-sm font-medium text-gray-700">Email address</label>
-                                    <input type="text" name="email-address" id="email-address" autocomplete="email" class="border p-2 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" />
+                                    <input type="text" name="email-address" id="email-address" autocomplete="email" class="border p-2 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                        required
+                                        onChange={ev => this.setState({ email: ev.target.value })} />
                                 </div>
                                 <div class="col-span-6 sm:col-span-3">
                                     <label for="country" class="block text-sm font-medium text-gray-700">No. HP</label>
-                                    <input type="text" name="number-hp" id="number-hp" autocomplete="number-hp" placeholder="+62" class="border p-2 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" 
-                                    value={this.state.nomor_hp}/>
+                                    <input type="text" name="number-hp" id="number-hp" autocomplete="number-hp" placeholder="+62" class="border p-2 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                        value={this.state.telephone}
+                                        required
+                                        onChange={ev => this.setState({ telephone: ev.target.value })} />
                                 </div>
                                 <div class="col-span-6 sm:col-span-3">
                                     <label for="password" class="block text-sm font-medium text-gray-700">Password</label>

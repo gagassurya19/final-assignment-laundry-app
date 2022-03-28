@@ -11,6 +11,11 @@ export default class Instruction extends React.Component {
                 driver: ''
             }
         }
+        // cek token dari localstorage
+        if (!localStorage.getItem("token_customer")) {
+            window.location = "/login"
+        }
+
         if (sessionStorage.getItem('addressIndex') &&
             sessionStorage.getItem('packageIndex') &&
             sessionStorage.getItem('outletIndex') &&

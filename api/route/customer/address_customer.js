@@ -19,13 +19,13 @@ app.use(authGetAccess)
 // Get data by id
 app.get('/:id', async (req, res) => {
     let params = {
-        id_address_customer: req.params.id
+        id_customer: req.params.id
     }
     address_customer.findAll({where: params, include: [{ all: true, nested: true }] })
         .then(result => {
             if(result.length == 0) {
                 res.json({
-                    data_address_customer: "Data not found",
+                    data_address_customer: result,
                     found: false
                 })
             } else {
