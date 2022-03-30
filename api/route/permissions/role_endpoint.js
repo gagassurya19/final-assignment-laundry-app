@@ -16,7 +16,8 @@ const GET = {
     "/customer_address_customer": [ROLE.CUSTOMER],
     "/customer_payment_customer": [ROLE.CUSTOMER],
     "/customer_transaction": [ROLE.CUSTOMER],
-    "/customer_crud": [ROLE.CUSTOMER]
+    "/customer_crud": [ROLE.CUSTOMER],
+    "/customer_invoice": [ROLE.ADMIN, ROLE.KASIR, ROLE.OWNER, ROLE.CUSTOMER],
 }
 
 const POST = {
