@@ -56,6 +56,8 @@ app.post('/', async (req, res) => {
         invoice_code: req.body.invoice_code,
         pickup_date: req.body.pickup_date,
         drop_date: req.body.drop_date,
+        pickup_time: req.body.pickup_time,
+        drop_time: req.body.drop_time,
         notes_laundry: req.body.notes_laundry,
         notes_driver: req.body.notes_driver,
         status: req.body.status
@@ -89,6 +91,8 @@ app.put('/:id', async (req, res) => {
         invoice_code: req.body.invoice_code,
         pickup_date: req.body.pickup_date,
         drop_date: req.body.drop_date,
+        pickup_time: req.body.pickup_time,
+        drop_time: req.body.drop_time,
         notes_laundry: req.body.notes_laundry,
         notes_driver: req.body.notes_driver,
         status: req.body.status

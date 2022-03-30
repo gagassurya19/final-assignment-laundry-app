@@ -1,20 +1,9 @@
 import React from "react"
+import axios from 'axios';
+
 import { Modal } from "../../../components"
 
 export default class modal_Outlet extends React.Component {
-    dummyData = [
-        {
-            id: 1,
-            outlet_name: 'Outlet Malang Raya',
-            phone: '08123412412'
-        },
-        {
-            id: 2,
-            outlet_name: 'Outlet Tulungagung',
-            phone: '08235613532'
-        }
-    ];
-
     constructor() {
         super()
         this.state = {
@@ -26,21 +15,41 @@ export default class modal_Outlet extends React.Component {
             },
             outletData: {
                 outlet_name: '',
-                phone: ''
-            }
+                telephone: ''
+            },
+            token: localStorage.getItem('token_customer'),
+            id_customer: localStorage.getItem('id_customer'),
+            data: [],
+            isLoading: true
         }
 
         this.onValueChange = this.onValueChange.bind(this);
         this.onSubmitChangeList = this.onSubmitChangeList.bind(this);
     }
 
+    getDataOutlet = async () => {
+        const url = process.env.REACT_APP_CUSTOMER_API_URL + 'customer_outlet'
+
+        await axios.get(url, {
+            headers: {
+                Authorization: "Bearer " + this.state.token
+            }
+        })
+            .then(result => {
+                this.setState({
+                    data: result.data.data_outlet
+                })
+            })
+            .catch(error => console.log(error))
+    }
+
     // ambil value dari sessionStorage
-    getSessionValue(){
-        if(sessionStorage.getItem("outletIndex")){
+    async getSessionValue() {
+        if (sessionStorage.getItem("outletIndex")) {
             this.setState({
                 outletData: {
-                    outlet_name: this.dummyData[JSON.parse(sessionStorage.getItem("outletIndex"))].outlet_name,
-                    phone: this.dummyData[JSON.parse(sessionStorage.getItem("outletIndex"))].phone,
+                    outlet_name: this.state.data[sessionStorage.getItem("outletIndex")].outlet_name,
+                    telephone: this.state.data[sessionStorage.getItem("outletIndex")].telephone,
                 }
             });
         }
@@ -54,15 +63,15 @@ export default class modal_Outlet extends React.Component {
     }
 
     // submit ke state
-    async onSubmitChangeList(event) {
+    onSubmitChangeList(event) {
         event.preventDefault();
-        await this.setState({
+        this.setState({
             outletData: {
-                outlet_name: this.dummyData[this.state.selectedIndex].outlet_name,
-                phone: this.dummyData[this.state.selectedIndex].phone
+                outlet_name: this.state.data[this.state.selectedIndex].outlet_name,
+                telephone: this.state.data[this.state.selectedIndex].telephone
             }
         });
-        await sessionStorage.setItem("outletIndex", this.state.selectedIndex);
+        sessionStorage.setItem("outletIndex", this.state.selectedIndex);
     }
 
     toggleModal = (isOpen) => {
@@ -73,8 +82,9 @@ export default class modal_Outlet extends React.Component {
         }
     }
 
-    componentDidMount() {
-        this.getSessionValue();
+    async componentDidMount() {
+        await this.getDataOutlet()
+        await this.getSessionValue()
     }
 
     render() {
@@ -90,7 +100,7 @@ export default class modal_Outlet extends React.Component {
                         {this.state.outletData.outlet_name ? (
                             <>
                                 <span class="title-font font-medium text-gray-900">{this.state.outletData.outlet_name}</span>
-                                <span class="text-gray-500 text-sm">{this.state.outletData.phone}</span>
+                                <span class="text-gray-500 text-sm">{this.state.outletData.telephone}</span>
                             </>
                         ) : (
                             <>
@@ -115,7 +125,7 @@ export default class modal_Outlet extends React.Component {
                             <div class="px-4 py-5 bg-white sm:p-6">
                                 <div class="grid grid-cols-6 gap-6">
                                     <div class="col-span-12 sm:col-span-12 w-full">
-                                        {this.dummyData.map((data, index) => (
+                                        {this.state.data.map((data, index) => (
                                             <button type="button" class="inline-flex relative items-center py-5 px-4 w-full text-sm font-medium border-b hover:bg-gray-100 focus:z-10 focus:ring-2">
                                                 <label class="inline-flex items-center">
                                                     <input type="radio" class="form-radio mr-2" name="accountType"
@@ -128,7 +138,7 @@ export default class modal_Outlet extends React.Component {
                                                         </svg>
                                                         <span class="flex flex-col text-left pl-2">
                                                             <span class="title-font font-medium text-gray-900">{data.outlet_name}</span>
-                                                            <span class="text-gray-500 text-sm">{data.phone}</span>
+                                                            <span class="text-gray-500 text-sm">{data.telephone}</span>
                                                         </span>
                                                     </div>
                                                 </label>

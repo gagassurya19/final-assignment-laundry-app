@@ -1,22 +1,9 @@
 import React from "react"
+import axios from 'axios';
+
 import { Modal } from "../../../components"
 
 export default class modal_payment extends React.Component {
-    dummyData = [
-        {
-            id: 1,
-            nama_rekening: 'Rekening 1',
-            nama_bank: 'Bank Mandiri',
-            nomor_rekening: '123456789',
-        },
-        {
-            id: 2,
-            nama_rekening: 'Rekening 2',
-            nama_bank: 'Bank BCA',
-            nomor_rekening: '123456789',
-        }
-    ];
-
     constructor() {
         super()
         this.state = {
@@ -28,10 +15,17 @@ export default class modal_payment extends React.Component {
                 modal_desc: 'Syarat Penggunaan: <br /> - Wajib memasukan semua kolom'
             },
             paymentData: {
-                nama_rekening: '',
-                nama_bank: '',
-                nomor_rekening: ''
-            }
+                payment_name: '',
+                payment_bank_name: '',
+                payment_number: ''
+            },
+            id_customer: localStorage.getItem('id_customer'),
+            token: localStorage.getItem('token_customer'),
+            data: [],
+            payment_name: '',
+            payment_number: '',
+            payment_bank_name: '',
+            notes: ''
         }
 
         this.onValueChange = this.onValueChange.bind(this);
@@ -39,14 +33,73 @@ export default class modal_payment extends React.Component {
         this.onSubmitAddData = this.onSubmitAddData.bind(this);
     }
 
+    getDataPayment = async () => {
+        const url = process.env.REACT_APP_CUSTOMER_API_URL + 'customer_payment_customer/' + this.state.id_customer
+
+        await axios.get(url, {
+            headers: {
+                Authorization: 'Bearer ' + this.state.token
+            }
+        })
+            .then(result => {
+                this.setState({
+                    data: result.data.data_payment_customer
+                })
+            })
+            .catch(err => {
+                console.log(err.message);
+            })
+    }
+
+    addPayment = () => {
+        this.setState({
+            addPayment: true
+        })
+        this.setState({
+            action: 'add',
+            id_customer: this.state.id_customer,
+            payment_name: '',
+            payment_number: '',
+            payment_bank_name: '',
+            notes: ''
+        })
+    }
+
+    saveData = async (ev) => {
+        ev.preventDefault()
+        let data = {
+            id_customer: this.state.id_customer,
+            payment_name: this.state.payment_name,
+            payment_number: this.state.payment_number,
+            payment_bank_name: this.state.payment_bank_name,
+            notes: this.state.notes
+        }
+
+        const url = process.env.REACT_APP_CUSTOMER_API_URL + 'customer_payment_customer'
+
+        await axios.post(url, data, {
+            headers: {
+                Authorization: "Bearer " + this.state.token
+            }
+        })
+            .then(response => {
+                this.getDataPayment()
+            })
+            .catch(error => console.log(error))
+
+        this.setState({
+            addPayment: false
+        })
+    }
+
     // ambil value dari sessionStorage
-    getSessionValue() {
+    async getSessionValue() {
         if (sessionStorage.getItem("paymentIndex")) {
             this.setState({
                 paymentData: {
-                    nama_rekening: this.dummyData[JSON.parse(sessionStorage.getItem("paymentIndex"))].nama_rekening,
-                    nama_bank: this.dummyData[JSON.parse(sessionStorage.getItem("paymentIndex"))].nama_bank,
-                    nomor_rekening: this.dummyData[JSON.parse(sessionStorage.getItem("paymentIndex"))].nomor_rekening,
+                    payment_name: this.state.data[sessionStorage.getItem("paymentIndex")].payment_name,
+                    payment_bank_name: this.state.data[sessionStorage.getItem("paymentIndex")].payment_bank_name,
+                    payment_number: this.state.data[sessionStorage.getItem("paymentIndex")].payment_number,
                 }
             });
         }
@@ -60,16 +113,17 @@ export default class modal_payment extends React.Component {
     }
 
     // submit ke state
-    async onSubmitChangeList(event) {
+    onSubmitChangeList(event) {
         event.preventDefault();
-        await this.setState({
+        this.setState({
             paymentData: {
-                nama_rekening: this.dummyData[this.state.selectedIndex].nama_rekening,
-                nama_bank: this.dummyData[this.state.selectedIndex].nama_bank,
-                nomor_rekening: this.dummyData[this.state.selectedIndex].nomor_rekening,
+                payment_name: this.state.data[this.state.selectedIndex].payment_name,
+                payment_bank_name: this.state.data[this.state.selectedIndex].payment_bank_name,
+                payment_number: this.state.data[this.state.selectedIndex].payment_number,
             }
         });
-        await sessionStorage.setItem("paymentIndex", this.state.selectedIndex);
+        sessionStorage.setItem("paymentIndex", this.state.selectedIndex);
+        window.location.reload();
     }
 
     onSubmitAddData(event) {
@@ -85,8 +139,9 @@ export default class modal_payment extends React.Component {
         }
     }
 
-    componentDidMount() {
-        this.getSessionValue()
+    async componentDidMount() {
+        await this.getDataPayment()
+        await this.getSessionValue()
     }
     render() {
         return (
@@ -95,17 +150,8 @@ export default class modal_payment extends React.Component {
                     onClick={() => { this.toggleModal(true) }}>
                     <svg class="h-8 w-8 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
                     <span class="flex flex-col text-left pl-2">
-                        {this.state.paymentData.nama_bank ? (
-                            <>
-                                <span class="title-font font-medium text-gray-900">{this.state.paymentData.nama_rekening}</span>
-                                <span class="text-gray-500 text-sm">{this.state.paymentData.nama_bank}: {this.state.paymentData.nomor_rekening}</span>
-                            </>
-                        ) : (
-                            <>
-                                <span class="title-font font-medium text-gray-900">Add Payment</span>
-                                <span class="text-gray-500 text-sm">Pilih cara pembayaran anda</span>
-                            </>
-                        )}
+                        <span class="title-font font-medium text-gray-900">{this.state.paymentData.payment_name || "Add Payment"}</span>
+                        <span class="text-gray-500 text-sm">{this.state.paymentData.payment_bank_name || "Pilih cara pembayaran anda"}: {this.state.paymentData.payment_number}</span>
                     </span>
                 </button>
                 {/* modal */}
@@ -119,7 +165,7 @@ export default class modal_payment extends React.Component {
                     </div>
                     {/* Form */}
                     <div>
-                        <form method="POST" onSubmit={this.state.addPayment ? this.onSubmitAddData : this.onSubmitChangeList}>
+                        <form onSubmit={this.state.addPayment ? (ev) => this.saveData(ev) : (ev) => this.onSubmitChangeList(ev)}>
                             <div class="px-4 py-5 bg-white sm:p-6">
                                 <div class="grid grid-cols-6 gap-6">
                                     {this.state.addPayment ? (
@@ -129,6 +175,8 @@ export default class modal_payment extends React.Component {
                                                 <label for="nama_rekening" class="block text-sm font-medium text-gray-700">Nama Rekening</label>
                                                 <input type="text" name="nama_rekening" id="nama_rekening" autocomplete="nama_rekening"
                                                     class="mt-1 p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                                    onChange={(ev) => this.setState({payment_name: ev.target.value})}
+                                                    value={this.state.payment_name}
                                                     placeholder='Nama Rekening'
                                                     required />
                                             </div>
@@ -137,6 +185,8 @@ export default class modal_payment extends React.Component {
                                                 <label for="nama_bank" class="block text-sm font-medium text-gray-700">Bank</label>
                                                 <input type="text" name="nama_bank" id="nama_bank" autocomplete="nama_bank"
                                                     class="mt-1 p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                                    onChange={(ev) => this.setState({payment_bank_name: ev.target.value})}
+                                                    value={this.state.payment_bank_name}
                                                     placeholder='Nama Bank'
                                                     required />
                                             </div>
@@ -145,6 +195,8 @@ export default class modal_payment extends React.Component {
                                                 <label for="no_rek" class="block text-sm font-medium text-gray-700">No. Rekening</label>
                                                 <input type="number" name="no_rek" id="no_rek" autocomplete="no_rek"
                                                     class="mt-1 p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                                    onChange={(ev) => this.setState({payment_number: ev.target.value})}
+                                                    value={this.state.payment_number}
                                                     placeholder='048xxxxx'
                                                     required />
                                             </div>
@@ -155,6 +207,8 @@ export default class modal_payment extends React.Component {
                                                     class="fmt-1 p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                                                     id="exampleFormControlTextarea1"
                                                     rows="3"
+                                                    onChange={(ev) => this.setState({notes: ev.target.value})}
+                                                    value={this.state.notes}
                                                     placeholder="Your notes">
                                                 </textarea>
                                             </div>
@@ -163,17 +217,17 @@ export default class modal_payment extends React.Component {
                                         <>
                                             {/* Address Already */}
                                             <div class="col-span-12 sm:col-span-12 w-full">
-                                                {this.dummyData.map((data, index) => (
+                                                {this.state.data.map((data, index) => (
                                                     <button type="button" class="inline-flex relative items-center py-5 px-4 w-full text-sm font-medium border-b hover:bg-gray-100 focus:z-10 focus:ring-2">
                                                         <label class="inline-flex items-center">
-                                                            <input type="radio" class="form-radio mr-2" name="accountType" 
-                                                            value={index}
-                                                            onChange={this.onValueChange} />
+                                                            <input type="radio" class="form-radio mr-2" name="accountType"
+                                                                value={index}
+                                                                onChange={this.onValueChange} />
                                                             <div class="flex justify-between">
                                                                 <svg class="h-8 w-8 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
                                                                 <span class="flex flex-col text-left pl-2">
-                                                                    <span class="title-font font-medium text-gray-900">{data.nama_rekening}</span>
-                                                                    <span class="text-gray-500 text-sm">{data.nama_bank}: {data.nomor_rekening}</span>
+                                                                    <span class="title-font font-medium text-gray-900">{data.payment_name}</span>
+                                                                    <span class="text-gray-500 text-sm">{data.payment_bank_name}: {data.payment_number}</span>
                                                                 </span>
                                                             </div>
                                                         </label>
@@ -184,7 +238,7 @@ export default class modal_payment extends React.Component {
                                                 <button
                                                     className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                                                     type="button"
-                                                    onClick={() => this.setState({ addPayment: true })}>
+                                                    onClick={(ev) => this.addPayment(ev)}>
                                                     Add Payment
                                                 </button>
                                             </div>

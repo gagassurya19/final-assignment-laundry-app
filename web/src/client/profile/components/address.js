@@ -140,12 +140,20 @@ export default class Address extends React.Component {
                     }
                 })
                 .then(response => {
-                    this.getDataAddress()
-                    sweetAlertTailwindButton.fire(
-                        'Deleted!',
-                        'Your data has been deleted.',
-                        'success'
-                    )
+                    if(response.data.isSuccess){
+                        this.getDataAddress()
+                        sweetAlertTailwindButton.fire(
+                            'Deleted!',
+                            'Your data has been deleted.',
+                            'success'
+                        )
+                    } else {
+                        sweetAlertTailwindButton.fire(
+                            'Failed!',
+                            response.data.message,
+                            'error'
+                        )
+                    }
                 })
                 .catch(error => {
                     sweetAlertTailwindButton.fire(

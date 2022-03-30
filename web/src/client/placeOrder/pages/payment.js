@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import axios from 'axios';
+
 import Modal_payment from '../modal/payment';
 import { Timeline, Footer } from '../../../components';
 
@@ -10,6 +12,7 @@ export default class Payment extends React.Component {
     constructor() {
         super()
         this.state = {
+            isSuccess: false,
             paylater: false,
             dataSessionTransaction: {
                 id_address_customer: this.addSession('addressIndex'),
@@ -22,20 +25,41 @@ export default class Payment extends React.Component {
                 drop_time: this.addSession('drop_time'),
                 laundry_notes: this.addSession('laundryNotes'),
                 driver_notes: this.addSession('driverNotes'),
-            }
+            },
+            data_picked: {
+                payment_index: sessionStorage.getItem('paymentIndex'),
+                package_index: sessionStorage.getItem('packageIndex'),
+                outlet_index: sessionStorage.getItem('outletIndex'),
+                address_index: sessionStorage.getItem('addressIndex'),
+                pickup_date: sessionStorage.getItem('pickup_date'),
+                pickup_time: sessionStorage.getItem('pickup_time'),
+                drop_date: sessionStorage.getItem('drop_date'),
+                drop_time: sessionStorage.getItem('drop_time'),
+                notes_laundry: sessionStorage.getItem('laundryNotes'),
+                notes_driver: sessionStorage.getItem('driverNotes'),
+            },
+            token: localStorage.getItem('token_customer'),
+            id_customer: localStorage.getItem('id_customer'),
+            id_administrator: 0,
+            id_address: 0,
+            id_outlet: 0,
+            id_package: 0,
+            id_payment: 0,
+            invoice_code: '',
+            status: 0
         }
         // cek token dari localstorage
         if (!localStorage.getItem("token_customer")) {
             window.location = "/login"
         }
-        
-        if (sessionStorage.getItem('addressIndex') &&
-            sessionStorage.getItem('packageIndex') &&
-            sessionStorage.getItem('outletIndex') &&
-            sessionStorage.getItem('pickup_date') &&
-            sessionStorage.getItem('pickup_time') &&
-            sessionStorage.getItem('drop_date') &&
-            sessionStorage.getItem('drop_time')) {
+
+        if (this.state.data_picked.address_index &&
+            this.state.data_picked.package_index &&
+            this.state.data_picked.outlet_index &&
+            this.state.data_picked.pickup_date &&
+            this.state.data_picked.pickup_time &&
+            this.state.data_picked.drop_date &&
+            this.state.data_picked.drop_time) {
         } else {
             window.location = '/order/pick_drop';
         }
@@ -45,31 +69,183 @@ export default class Payment extends React.Component {
         return sessionStorage.getItem(item)
     }
 
-    submitTransaction = (ev) => {
-        ev.preventDefault();
-        if (sessionStorage.getItem('paymentIndex') === null) {
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+    // get data address
+    getDataAddress = async () => {
+        const url = process.env.REACT_APP_CUSTOMER_API_URL + 'customer_address_customer/' + this.state.id_customer
+
+        await axios.get(url, {
+            headers: {
+                Authorization: "Bearer " + this.state.token
+            }
+        })
+            .then(result => {
+                this.setState({
+                    id_address: result.data.data_address_customer[this.state.data_picked.address_index].id_address_customer
+                })
+            })
+            .catch(error => console.log(error))
+    }
+
+    // get data outlet
+    getDataOutlet = async () => {
+        const url = process.env.REACT_APP_CUSTOMER_API_URL + 'customer_outlet'
+
+        await axios.get(url, {
+            headers: {
+                Authorization: "Bearer " + this.state.token
+            }
+        })
+            .then(result => {
+                this.setState({
+                    id_outlet: result.data.data_outlet[this.state.data_picked.outlet_index].id_outlet,
+                    id_administrator: result.data.data_outlet[this.state.data_picked.outlet_index].id_administrator
+                })
+            })
+            .catch(error => console.log(error))
+    }
+
+    // get data package 
+    getDataPackage = async () => {
+        const url = process.env.REACT_APP_CUSTOMER_API_URL + 'customer_package'
+
+        await axios.get(url, {
+            headers: {
+                Authorization: "Bearer " + this.state.token
+            }
+        })
+            .then(result => {
+                this.setState({
+                    id_package: result.data.data_package[this.state.data_picked.package_index].id_package
+                })
+            })
+            .catch(error => console.log(error))
+    }
+
+    // get data payment
+    getDataPayment = async () => {
+        const url = process.env.REACT_APP_CUSTOMER_API_URL + 'customer_payment_customer/' + this.state.id_customer
+
+        await axios.get(url, {
+            headers: {
+                Authorization: 'Bearer ' + this.state.token
+            }
+        })
+            .then(result => {
+                this.setState({
+                    id_payment: result.data.data_payment_customer[this.state.data_picked.payment_index].id_payment_customer
+                })
+            })
+            .catch(err => {
+                console.log(err.message);
+            })
+    }
+
+    // generate invoice code
+    async generateInvoiceCode(count) {
+        let defaultNumber = 4413277523420
+        let convertToArray = defaultNumber.toString().split("")
+        let sliceNumber = convertToArray.slice(0, count)
+        let randomNumber = Math.floor((Math.random() * +sliceNumber.join("")));
+
+        if (randomNumber.toString().split("").length < count) {
+            randomNumber = Math.abs(randomNumber - +sliceNumber.join(""))
+        }
+
+        const invoice = 'INV' + this.state.id_customer + this.state.id_administrator + randomNumber
+
+        this.setState({
+            invoice_code: invoice
+        })
+    }
+
+    // make transaction
+    makeTransaction = async () => {
+        await this.generateInvoiceCode()
+        const url = process.env.REACT_APP_CUSTOMER_API_URL + 'customer_transaction'
+
+        let data = {
+            id_customer: this.state.id_customer,
+            id_administrator: this.state.id_administrator,
+            id_address_customer: this.state.id_address,
+            id_package: this.state.id_package,
+            id_outlet: this.state.id_outlet,
+            id_payment_customer: this.state.id_payment,
+            invoice_code: this.state.invoice_code,
+            pickup_date: this.state.data_picked.pickup_date,
+            drop_date: this.state.data_picked.drop_date,
+            pickup_time:  this.state.data_picked.pickup_time,
+            drop_time: this.state.data_picked.drop_time,
+            notes_laundry: this.state.data_picked.notes_laundry,
+            notes_driver: this.state.data_picked.notes_driver,
+            status: this.state.status,
+        }
+
+        await axios.post(url, data, {
+            headers: {
+                Authorization: 'Bearer ' + this.state.token
+            }
+        })
+            .then(result => {
+                if(result.data.isSuccess){
+                    this.Alert('success', 'Transaction Success')
+                    this.setState({
+                        isSuccess: true
+                    })
+                } else {
+                    this.Alert('error', result.message)
+                    this.setState({
+                        isSuccess: false
+                    })
                 }
             })
-
-            Toast.fire({
-                icon: 'warning',
-                title: 'Please complete the form below.'
+            .catch(err => {
+                this.Alert('error', err.message)
+                this.setState({
+                    isSuccess: false
+                })
             })
+    }
+
+    submitTransaction = async (ev) => {
+        ev.preventDefault();
+        if (sessionStorage.getItem('paymentIndex') === null) {
+            this.Alert('warning', 'Please complete the data payment')
         } else {
+            await this.makeTransaction()
             window.sessionStorage.clear();
-            const a = "INV-2019-01-01-001";
-            window.sessionStorage.setItem('invoice', a);
-            window.location = `/order/done/`;
+            window.sessionStorage.setItem('invoice', this.state.invoice_code);
+            if(this.state.isSuccess){
+                setTimeout(() => {
+                    window.location = `/order/done/`;
+                }, 1600);
+            }
         }
+    }
+
+    Alert(kind, description){
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+
+        Toast.fire({
+            icon: kind,
+            title: description
+        })
+    }
+
+    async componentDidMount() {
+        await this.getDataAddress();
+        await this.getDataOutlet();
+        await this.getDataPackage();
+        await this.getDataPayment();
     }
 
     render() {

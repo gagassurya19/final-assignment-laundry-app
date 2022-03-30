@@ -83,11 +83,19 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false
       },
       pickup_date: {
-        type: DataTypes.DATEONLY,
+        type: DataTypes.STRING(255),
         allowNull: false
       },
       drop_date: {
-        type: DataTypes.DATEONLY,
+        type: DataTypes.STRING(255),
+        allowNull: false
+      },
+      pickup_time: {
+        type: DataTypes.STRING(255),
+        allowNull: false
+      },
+      drop_time: {
+        type: DataTypes.STRING(255),
         allowNull: false
       },
       notes_laundry: {

@@ -23,6 +23,8 @@ const c_payment_customer = require('./route/customer/payment_customer')
 const c_address_customer = require('./route/customer/address_customer')
 const c_transaction = require('./route/customer/transaction')
 const c_customer = require('./route/customer/customer')
+const c_outlet = require('./route/customer/outlet')
+const c_package = require('./route/customer/package')
 
 // use autentikasi
 app.use('/auth_admin', auth_admin)
@@ -42,6 +44,8 @@ app.use("/customer_payment_customer", c_payment_customer)
 app.use("/customer_address_customer", c_address_customer)
 app.use("/customer_transaction", c_transaction)
 app.use("/customer_crud", c_customer)
+app.use("/customer_outlet", c_outlet)
+app.use("/customer_package", c_package)
 
 app.listen(process.env.PORT, () => {
     console.log("server start: " + process.env.PORT)

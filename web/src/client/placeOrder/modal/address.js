@@ -1,20 +1,9 @@
 import React from "react"
+
+import axios from 'axios';
 import { Modal } from "../../../components"
 
 export default class modal_address extends React.Component {
-    dummyData = [
-        {
-            id: 1,
-            address_name: 'Alamat 1',
-            detail_address: 'Jl. Alamat 1',
-        },
-        {
-            id: 2,
-            address_name: 'Alamat 2',
-            detail_address: 'Jl. Alamat 2',
-        }
-    ];
-
     constructor() {
         super()
         this.state = {
@@ -27,22 +16,83 @@ export default class modal_address extends React.Component {
             },
             addressData: {
                 address_name: '',
-                detail_address: '',
-            }
+                address_detail: '',
+            },
+
+            token: localStorage.getItem('token_customer'),
+            id_customer: localStorage.getItem('id_customer'),
+            address_name: '',
+            address_detail: '',
+            telephone: '',
+            notes: '',
+            data: []
         }
 
         this.onValueChange = this.onValueChange.bind(this);
         this.onSubmitChangeList = this.onSubmitChangeList.bind(this);
-        this.onSubmitAddData = this.onSubmitAddData.bind(this);
+    }
+
+    getDataAddress = async () => {
+        const url = process.env.REACT_APP_CUSTOMER_API_URL + 'customer_address_customer/' + this.state.id_customer
+
+        await axios.get(url, {
+            headers: {
+                Authorization: "Bearer " + this.state.token
+            }
+        })
+            .then(result => {
+                this.setState({
+                    data: result.data.data_address_customer
+                })
+            })
+            .catch(error => console.log(error))
+    }
+
+    addAddress = () => {
+        this.setState({
+            addAddress: true,
+            id_customer: this.state.id_customer,
+            address_name: '',
+            address_detail: '',
+            telephone: '',
+            notes: ''
+        })
+    }
+
+    saveData = (ev) => {
+        ev.preventDefault()
+
+        let data = {
+            id_customer: this.state.id_customer,
+            address_name: this.state.address_name,
+            address_detail: this.state.address_detail,
+            telephone: this.state.telephone,
+            notes: this.state.notes
+        }
+
+        const url = process.env.REACT_APP_CUSTOMER_API_URL + 'customer_address_customer'
+        axios.post(url, data, {
+            headers: {
+                Authorization: "Bearer " + this.state.token
+            }
+        })
+            .then(response => {
+                this.getDataAddress()
+            })
+            .catch(error => console.log(error))
+
+        this.setState({
+            addAddress: false
+        })
     }
 
     // ambil value dari sessionStorage
-    getSessionValue(){
-        if(sessionStorage.getItem("addressIndex")){
+    async getSessionValue() {
+        if (sessionStorage.getItem("addressIndex")) {
             this.setState({
                 addressData: {
-                    address_name: this.dummyData[JSON.parse(sessionStorage.getItem("addressIndex"))].address_name,
-                    detail_address: this.dummyData[JSON.parse(sessionStorage.getItem("addressIndex"))].detail_address,
+                    address_name: this.state.data[sessionStorage.getItem("addressIndex")].address_name,
+                    address_detail: this.state.data[sessionStorage.getItem("addressIndex")].address_detail,
                 }
             });
         }
@@ -56,20 +106,15 @@ export default class modal_address extends React.Component {
     }
 
     // submit ke state
-    async onSubmitChangeList(event) {
+    onSubmitChangeList(event) {
         event.preventDefault();
-        await this.setState({
+        this.setState({
             addressData: {
-                address_name: this.dummyData[this.state.selectedIndex].address_name,
-                detail_address: this.dummyData[this.state.selectedIndex].detail_address,
+                address_name: this.state.data[this.state.selectedIndex].address_name,
+                address_detail: this.state.data[this.state.selectedIndex].address_detail,
             }
         });
-        await sessionStorage.setItem("addressIndex", this.state.selectedIndex);
-    }
-
-    onSubmitAddData(event) {
-        event.preventDefault();
-        this.setState({ addAddress: false });
+        sessionStorage.setItem("addressIndex", this.state.selectedIndex);
     }
 
     toggleModal = (isOpen) => {
@@ -80,8 +125,9 @@ export default class modal_address extends React.Component {
         }
     }
 
-    componentDidMount() {
-        this.getSessionValue()
+    async componentDidMount()  {
+        await this.getDataAddress()
+        await this.getSessionValue()
     }
 
     render() {
@@ -91,17 +137,8 @@ export default class modal_address extends React.Component {
                     onClick={() => { this.toggleModal(true) }}>
                     <svg class="h-8 w-8 text-black" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z" />  <path d="M21 3L14.5 21a.55 .55 0 0 1 -1 0L10 14L3 10.5a.55 .55 0 0 1 0 -1L21 3" /></svg>
                     <span class="flex flex-col text-left pl-2">
-                        {this.state.addressData.address_name ? (
-                            <>
-                                <span class="title-font font-medium text-gray-900">{this.state.addressData.address_name}</span>
-                                <span class="text-gray-500 text-sm">{this.state.addressData.detail_address}</span>
-                            </>
-                        ) : (
-                            <>
-                                <span class="title-font font-medium text-gray-900">Address</span>
-                                <span class="text-gray-500 text-sm">Isi dengan alamat anda</span>
-                            </>
-                        )}
+                        <span class="title-font font-medium text-gray-900">{this.state.addressData.address_name || "Address"}</span>
+                        <span class="text-gray-500 text-sm">{this.state.addressData.address_detail || "Isi dengan alamat anda"}</span>
                     </span>
                 </button>
                 {/* modal */}
@@ -115,7 +152,7 @@ export default class modal_address extends React.Component {
                     </div>
                     {/* Form */}
                     <div>
-                        <form method="POST" onSubmit={this.state.addAddress ? this.onSubmitAddData : this.onSubmitChangeList}>
+                        <form method="POST" onSubmit={this.state.addAddress ? (ev) => this.saveData(ev) : (ev) => this.onSubmitChangeList(ev)}>
                             <div class="px-4 py-5 bg-white sm:p-6">
                                 <div class="grid grid-cols-6 gap-6">
                                     {this.state.addAddress ? (
@@ -126,6 +163,7 @@ export default class modal_address extends React.Component {
                                                 <input type="text" name="nama_kelas" id="nama_kelas" autocomplete="nama_kelas"
                                                     class="mt-1 p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                                                     placeholder='Penerima'
+                                                    onChange={ev => this.setState({ address_name: ev.target.value })}
                                                     required />
                                             </div>
 
@@ -134,6 +172,7 @@ export default class modal_address extends React.Component {
                                                 <input type="text" name="nama_kelas" id="nama_kelas" autocomplete="nama_kelas"
                                                     class="mt-1 p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                                                     placeholder='Alamat'
+                                                    onChange={ev => this.setState({ address_detail: ev.target.value })}
                                                     required />
                                             </div>
 
@@ -142,6 +181,7 @@ export default class modal_address extends React.Component {
                                                 <input type="number" name="nama_kelas" id="nama_kelas" autocomplete="nama_kelas"
                                                     class="mt-1 p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                                                     placeholder='No HP'
+                                                    onChange={ev => this.setState({ telephone: ev.target.value })}
                                                     required />
                                             </div>
 
@@ -151,6 +191,7 @@ export default class modal_address extends React.Component {
                                                     class="fmt-1 p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                                                     id="exampleFormControlTextarea1"
                                                     rows="3"
+                                                    onChange={ev => this.setState({ notes: ev.target.value })}
                                                     placeholder="Your notes">
                                                 </textarea>
                                             </div>
@@ -159,7 +200,7 @@ export default class modal_address extends React.Component {
                                         <>
                                             {/* Address Already */}
                                             <div class="col-span-12 sm:col-span-12 w-full">
-                                                {this.dummyData.map((data, index) =>
+                                                {this.state.data.map((data, index) =>
                                                 (
                                                     <button type="button" class="inline-flex relative items-center py-5 px-4 w-full text-sm font-medium border-b hover:bg-gray-100 focus:z-10 focus:ring-2">
                                                         <label class="inline-flex items-center">
@@ -170,7 +211,7 @@ export default class modal_address extends React.Component {
                                                                 <svg class="h-8 w-8 text-black" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z" />  <path d="M21 3L14.5 21a.55 .55 0 0 1 -1 0L10 14L3 10.5a.55 .55 0 0 1 0 -1L21 3" /></svg>
                                                                 <span class="flex flex-col text-left pl-2">
                                                                     <span class="title-font font-medium text-gray-900">{data.address_name}</span>
-                                                                    <span class="text-gray-500 text-sm">{data.detail_address}</span>
+                                                                    <span class="text-gray-500 text-sm">{data.address_detail}</span>
                                                                 </span>
                                                             </div>
                                                         </label>
@@ -182,7 +223,7 @@ export default class modal_address extends React.Component {
                                                 <button
                                                     className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                                                     type="button"
-                                                    onClick={() => this.setState({ addAddress: true })}>
+                                                    onClick={() => this.addAddress()}>
                                                     Add Address
                                                 </button>
                                             </div>

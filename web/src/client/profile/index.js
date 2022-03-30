@@ -1,4 +1,5 @@
 import React from "react";
+import axios from 'axios';
 import { Link } from "react-router-dom";
 
 import { Footer, Tabs } from "../../components";
@@ -7,15 +8,58 @@ import Address from './components/address';
 import Payment from './components/payment';
 
 export default class Profile extends React.Component {
-    constructor(){
+    constructor() {
         super();
         this.state = {
-            register_date: localStorage.getItem('register_date')
+            id_customer: localStorage.getItem('id_customer'),
+            register_date: localStorage.getItem('register_date'),
+            token: localStorage.getItem('token_customer'),
+            photo_profile: ''
         }
-       // cek token dari localstorage
-       if (!localStorage.getItem("token_customer")) {
-        window.location = "/login"
+        // cek token dari localstorage
+        if (!localStorage.getItem("token_customer")) {
+            window.location = "/login"
+        }
     }
+
+    getImage = () => {
+        const url = process.env.REACT_APP_CUSTOMER_API_URL + 'customer_crud/' + this.state.id_customer
+        axios.get(url, {
+            headers: {
+                Authorization: "Bearer " + this.state.token
+            }
+        })
+            .then(result => {
+                this.setState({
+                    photo_profile: result.data.data_customer[0].photo_profile
+                })
+            })
+            .catch(error => console.log(error))
+    }
+
+    uploadImage = (ev) => {
+        ev.preventDefault()
+        const url = process.env.REACT_APP_CUSTOMER_API_URL + 'customer_crud/' + this.state.id_customer
+
+        let data = {
+            photo_profile: this.state.photo_profile
+        }
+
+        axios.put(url, data, {
+            headers: {
+                Authorization: "Bearer " + this.state.token
+            }
+        })
+            .then(result => {
+                this.setState({
+                    message: 'photo uploaded'
+                })
+            })
+            .catch(error => console.log(error.message))
+    }
+
+    componentDidMount() {
+        this.getImage()
     }
 
     render() {
@@ -30,11 +74,14 @@ export default class Profile extends React.Component {
                                 <div className="p-2 text-center">
                                     <div class="image overflow-hidden">
                                         <img class="w-60 mx-auto mb-3 rounded-full"
-                                            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                                            src={this.state.photo_profile || "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"}
                                             alt="Photo Profile" />
                                     </div>
                                     <label className="hover:cursor-pointer inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
-                                        <input type="file" className="hidden"/>
+                                        <form action="put" onChange={(ev) => this.uploadImage(ev)}>
+                                            <input type="file" className="hidden"
+                                                onChange={(ev) => this.setState({photo_profile: ev.target.files[0]})} />
+                                        </form>
                                         Change
                                     </label>
                                 </div>
