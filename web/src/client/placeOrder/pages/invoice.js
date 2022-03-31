@@ -119,8 +119,6 @@ export class Invoice extends Component {
     async componentDidMount() {
         await this.getInvoiceCode();
         await this.getDataInvoice();
-        console.log(this.state.data_invoice);
-        console.log(this.state.data_customer.first_name);
     }
 
     render() {

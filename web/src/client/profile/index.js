@@ -1,5 +1,9 @@
 import React from "react";
 import axios from 'axios';
+
+import $ from 'jquery';
+import Swal from 'sweetalert2';
+
 import { Link } from "react-router-dom";
 
 import { Footer, Tabs } from "../../components";
@@ -14,7 +18,7 @@ export default class Profile extends React.Component {
             id_customer: localStorage.getItem('id_customer'),
             register_date: localStorage.getItem('register_date'),
             token: localStorage.getItem('token_customer'),
-            photo_profile: ''
+            status: localStorage.getItem('status_customer')
         }
         // cek token dari localstorage
         if (!localStorage.getItem("token_customer")) {
@@ -22,44 +26,105 @@ export default class Profile extends React.Component {
         }
     }
 
-    getImage = () => {
-        const url = process.env.REACT_APP_CUSTOMER_API_URL + 'customer_crud/' + this.state.id_customer
-        axios.get(url, {
-            headers: {
-                Authorization: "Bearer " + this.state.token
-            }
+    Alert = (kind, message) => {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 2500,
+            timerProgressBar: true,
         })
-            .then(result => {
-                this.setState({
-                    photo_profile: result.data.data_customer[0].photo_profile
-                })
-            })
-            .catch(error => console.log(error))
+
+        Toast.fire({
+            icon: kind,
+            title: message
+        })
     }
 
-    uploadImage = (ev) => {
-        ev.preventDefault()
+    changeImage = async (input) => {
+        var url = input.value;
+        var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
+        if (input.files && input.files[0] && (ext == "gif" || ext == "png" || ext == "jpeg" || ext == "jpg")) {
+            var reader = new FileReader();
+
+            reader.onload = async function (e) {
+                $('#img').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+
+            // sweet alert
+            const sweetAlertTailwindButton = Swal.mixin({
+                customClass: {
+                    confirmButton: 'bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 mx-3 rounded',
+                    cancelButton: 'bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 mx-3 rounded'
+                },
+                buttonsStyling: false
+            })
+
+            sweetAlertTailwindButton.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, update it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true,
+                allowOutsideClick: false
+            }).then( async (result) => {
+                if (result.isConfirmed) {
+                    // upload image
+                    await this.uploadImage(input.files[0]);
+
+                    sweetAlertTailwindButton.fire(
+                        'Updated!',
+                        'Your photo profile has been updated.',
+                        'success'
+                    )
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 1100);
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    // change image in frontend
+                    $('#img').attr('src', localStorage.getItem('photo_profile_customer'));
+
+                    sweetAlertTailwindButton.fire(
+                        'Cancelled',
+                        'Your photo profile is safe :)',
+                        'error'
+                    )
+                }
+            })
+        } else {
+            $('#img').attr('src', 'https://www.roobinascake.com/assets/admin/images/no-preview-available.png');
+            this.Alert('error', 'File yang diupload harus berupa gambar');
+        }
+    }
+
+    uploadImage = async (dataImage) => {
         const url = process.env.REACT_APP_CUSTOMER_API_URL + 'customer_crud/' + this.state.id_customer
 
-        let data = {
-            photo_profile: this.state.photo_profile
-        }
+        let formData = new FormData();
+        formData.append('photo_profile', dataImage);
 
-        axios.put(url, data, {
+        await axios.put(url, formData, {
             headers: {
+                'Content-Type': formData.type,
                 Authorization: "Bearer " + this.state.token
             }
         })
             .then(result => {
-                this.setState({
-                    message: 'photo uploaded'
+                axios.get(url, {
+                    headers: {
+                        Authorization: "Bearer " + this.state.token
+                    }
                 })
+                    .then(result => {
+                        localStorage.setItem('photo_profile_customer', process.env.REACT_APP_CUSTOMER_API_IMAGE + result.data.data_customer[0].photo_profile);
+                    })
+                    .catch(error => console.log(error.message))
             })
             .catch(error => console.log(error.message))
-    }
-
-    componentDidMount() {
-        this.getImage()
     }
 
     render() {
@@ -72,15 +137,18 @@ export default class Profile extends React.Component {
                         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
                             <div className="px-4 py-5 sm:p-6 bg-white shadow rounded-md">
                                 <div className="p-2 text-center">
-                                    <div class="image overflow-hidden">
-                                        <img class="w-60 mx-auto mb-3 rounded-full"
-                                            src={this.state.photo_profile || "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"}
-                                            alt="Photo Profile" />
+                                    <div class="flex flex-wrap justify-center">
+                                        <div class="w-12/12 pb-5">
+                                            <img
+                                                id='img'
+                                                src={localStorage.getItem('photo_profile_customer') || "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"}
+                                                alt="Photo profile"
+                                                class="w-40 h-40 rounded-full flex-shrink-0 object-cover object-center" />
+                                        </div>
                                     </div>
                                     <label className="hover:cursor-pointer inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
-                                        <form action="put" onChange={(ev) => this.uploadImage(ev)}>
-                                            <input type="file" className="hidden"
-                                                onChange={(ev) => this.setState({photo_profile: ev.target.files[0]})} />
+                                        <form action="put" onChange={ev => this.changeImage(ev.target)}>
+                                            <input type="file" className="hidden" />
                                         </form>
                                         Change
                                     </label>
@@ -88,7 +156,11 @@ export default class Profile extends React.Component {
                                 <ul class="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">
                                     <li class="flex items-center py-3">
                                         <span>Status</span>
-                                        <span class="ml-auto"><span class="bg-green-500 py-1 px-2 rounded text-white text-sm">Active</span></span>
+                                        {this.state.status ? (
+                                            <span class="ml-auto"><span class="bg-green-500 py-1 px-2 rounded text-white text-sm">Active</span></span>
+                                        ):(
+                                            <span class="ml-auto"><span class="bg-red-500 py-1 px-2 rounded text-white text-sm">Suspend</span></span>
+                                        )}
                                     </li>
                                     <li class="flex items-center py-3">
                                         <span>Member since</span>

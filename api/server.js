@@ -49,6 +49,8 @@ app.use("/customer_outlet", c_outlet)
 app.use("/customer_package", c_package)
 app.use("/customer_invoice", c_invoice)
 
+app.use(express.static(__dirname+'/public'));
+
 app.listen(process.env.PORT, () => {
     console.log("server start: " + process.env.PORT)
 })

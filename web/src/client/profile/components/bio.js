@@ -72,8 +72,16 @@ export default class Bio extends React.Component {
             }
         })
             .then(result => {
-                this.getDataCustomer()
-                this.Alert('success', 'Data berhasil di update')
+                if(this.state.fillPassword){
+                    this.Alert('success', 'Data berhasil di update. \nSilahkan login kembali')
+                    localStorage.clear();   
+                    setTimeout(function () {
+                        window.location = '/login'
+                    }, 1600);
+                } else {
+                    this.getDataCustomer()
+                    this.Alert('success', 'Data berhasil di update')
+                }
             })
             .catch(error => {
                 this.Alert('error', error.message)

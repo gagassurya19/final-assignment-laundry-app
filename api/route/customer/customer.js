@@ -30,7 +30,7 @@ const encrypt = (nakedText) => {
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, "./image/customer");
+        cb(null, "./public/image/customer");
     },
     filename: (req, file, cb) => {
         cb(null, "image-" + Date.now() + path.extname(file.originalname));
@@ -67,60 +67,84 @@ app.get('/:id', verify, authGetAccess, async (req, res) => {
 })
 
 // Add data
-app.post('/', async (req, res) => {
-    upload.single("image")(req, res, () => {
-        // Deklarasi semua variable dalam table database member
-        let data = {
-            first_name: req.body.first_name,
-            last_name: req.body.last_name,
-            telephone: req.body.telephone,
-            email: req.body.email,
-            password: encrypt(req.body.password),
-            status: req.body.status
-        }
+app.post('/', upload.single("photo_profile"), async (req, res) => {
 
-        if (req.body.photo_profile) {
-            data.photo_profile = req.file.path
-        }
-        
-        customer.create(data)
-            .then(result => {
-                res.json({
-                    message: "Data inserted",
-                    isSuccess: true,
-                    data: result
-                })
-            })
-            .catch(error => {
-                res.json({
-                    message: error.message,
-                    isSuccess: false
-                })
-            })
-    })
-})
-
-// Update data
-app.put('/:id', verify, authGetAccess, async (req, res) => {
+    // Deklarasi semua variable dalam table database member
     let data = {
         first_name: req.body.first_name,
         last_name: req.body.last_name,
         telephone: req.body.telephone,
         email: req.body.email,
-        photo_profile: req.body.photo_profile,
-        register_date: req.body.register_date,
-        status: req.body.status
+        password: encrypt(req.body.password),
+        status: req.body.status,
     }
 
-    let id = {
+    console.log("test 1");
+    console.log(req.file);
+    if (req.file) {
+        data.photo_profile = req.file.filename
+
+    }
+    console.log("test 2");
+
+    customer.create(data)
+        .then(result => {
+            res.json({
+                message: "Data inserted",
+                isSuccess: true,
+                data: result
+            })
+        })
+        .catch(error => {
+            res.json({
+                message: error.message,
+                isSuccess: false
+            })
+        })
+})
+
+// Update data
+app.put('/:id', verify, authGetAccess, upload.single("photo_profile"), async (req, res) => {
+    let params = {
         id_customer: req.params.id
+    }
+
+    let data = {}
+
+    if (req.body.first_name ||
+        req.body.last_name ||
+        req.body.telephone ||
+        req.body.email ||
+        req.body.register_date ||
+        req.body.status) {
+        data.first_name = req.body.first_name,
+            data.last_name = req.body.last_name,
+            data.telephone = req.body.telephone,
+            data.email = req.body.email,
+            data.register_date = req.body.register_date,
+            data.status = req.body.status
     }
 
     if (req.body.password) {
         data.password = encrypt(req.body.password)
     }
 
-    customer.update(data, { where: id })
+    console.log("test 1");
+
+    if (req.file) {
+        // get data by id
+        const row = await customer.findOne({ where: params })
+        let oldFileName = row.photo_profile
+
+        // // delete old file
+        let dir = path.join(__dirname, "../../public/image/customer/", oldFileName)
+        fs.unlink(dir, err => console.log(err))
+
+        // // // set new filename
+        data.photo_profile = req.file.filename
+    }
+
+    customer.update(data, { where: params })
         .then(result => {
             res.json({
                 message: "Data updated",
