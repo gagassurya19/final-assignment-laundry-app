@@ -8,7 +8,7 @@ export default class Login extends React.Component {
     constructor() {
         super()
         this.state = {
-            telephone: '123',
+            telephone: '081234567896',
             password: 'customer',
             token: ''
         }
@@ -36,7 +36,7 @@ export default class Login extends React.Component {
                     localStorage.setItem('token_customer', response.data.token)
                     localStorage.setItem('id_customer', response.data.data.id_customer)
                     localStorage.setItem('status_customer', response.data.data.status)
-                    localStorage.setItem('photo_profile_customer', process.env.REACT_APP_CUSTOMER_API_IMAGE + response.data.data.photo_profile)
+                    localStorage.setItem('photo_profile_customer', response.data.data.photo_profile)
                     localStorage.setItem('register_date', response.data.data.register_date)
                     localStorage.setItem('name_customer', response.data.data.first_name +" "+ response.data.data.last_name)
                     this.Alert('success', 'Login berhasil. \nRedirect ke Dashboard')

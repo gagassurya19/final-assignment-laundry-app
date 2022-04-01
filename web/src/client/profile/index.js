@@ -45,56 +45,60 @@ export default class Profile extends React.Component {
         var url = input.value;
         var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
         if (input.files && input.files[0] && (ext == "gif" || ext == "png" || ext == "jpeg" || ext == "jpg")) {
-            var reader = new FileReader();
+            try {
+                var reader = new FileReader();
 
-            reader.onload = async function (e) {
-                $('#img').attr('src', e.target.result);
+                reader.onload = async function (e) {
+                    $('#img').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+
+                // sweet alert
+                const sweetAlertTailwindButton = Swal.mixin({
+                    customClass: {
+                        confirmButton: 'bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 mx-3 rounded',
+                        cancelButton: 'bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 mx-3 rounded'
+                    },
+                    buttonsStyling: false
+                })
+
+                sweetAlertTailwindButton.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, update it!',
+                    cancelButtonText: 'No, cancel!',
+                    reverseButtons: true,
+                    allowOutsideClick: false
+                }).then(async (result) => {
+                    if (result.isConfirmed) {
+                        // upload image
+                        await this.uploadImage(input.files[0]);
+
+                        sweetAlertTailwindButton.fire(
+                            'Updated!',
+                            'Your photo profile has been updated.',
+                            'success'
+                        )
+                        setTimeout(function () {
+                            window.location.reload();
+                        }, 1100);
+                    } else if (result.dismiss === Swal.DismissReason.cancel) {
+                        // change image in frontend
+                        $('#img').attr('src', localStorage.getItem('photo_profile_customer'));
+                        sweetAlertTailwindButton.fire(
+                            'Cancelled',
+                            'Your photo profile is safe :)',
+                            'error'
+                        )
+                    }
+                })
+            } catch (err) {
+                console.log(err);
             }
 
-            reader.readAsDataURL(input.files[0]);
-
-            // sweet alert
-            const sweetAlertTailwindButton = Swal.mixin({
-                customClass: {
-                    confirmButton: 'bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 mx-3 rounded',
-                    cancelButton: 'bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 mx-3 rounded'
-                },
-                buttonsStyling: false
-            })
-
-            sweetAlertTailwindButton.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Yes, update it!',
-                cancelButtonText: 'No, cancel!',
-                reverseButtons: true,
-                allowOutsideClick: false
-            }).then( async (result) => {
-                if (result.isConfirmed) {
-                    // upload image
-                    await this.uploadImage(input.files[0]);
-
-                    sweetAlertTailwindButton.fire(
-                        'Updated!',
-                        'Your photo profile has been updated.',
-                        'success'
-                    )
-                    setTimeout(function () {
-                        window.location.reload();
-                    }, 1100);
-                } else if (result.dismiss === Swal.DismissReason.cancel) {
-                    // change image in frontend
-                    $('#img').attr('src', localStorage.getItem('photo_profile_customer'));
-
-                    sweetAlertTailwindButton.fire(
-                        'Cancelled',
-                        'Your photo profile is safe :)',
-                        'error'
-                    )
-                }
-            })
         } else {
             $('#img').attr('src', 'https://www.roobinascake.com/assets/admin/images/no-preview-available.png');
             this.Alert('error', 'File yang diupload harus berupa gambar');
@@ -127,6 +131,12 @@ export default class Profile extends React.Component {
             .catch(error => console.log(error.message))
     }
 
+    parseDate = () => {
+        const date = new Date(this.state.register_date);
+        const dateReturn = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+        return dateReturn;
+    }
+
     render() {
         return (
             <>
@@ -141,7 +151,11 @@ export default class Profile extends React.Component {
                                         <div class="w-12/12 pb-5">
                                             <img
                                                 id='img'
-                                                src={localStorage.getItem('photo_profile_customer') || "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"}
+                                                src={
+                                                    localStorage.getItem('photo_profile_customer') ?
+                                                        process.env.REACT_APP_CUSTOMER_API_IMAGE + localStorage.getItem('photo_profile_customer') :
+                                                        "http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png"
+                                                }
                                                 alt="Photo profile"
                                                 class="w-40 h-40 rounded-full flex-shrink-0 object-cover object-center" />
                                         </div>
@@ -158,13 +172,13 @@ export default class Profile extends React.Component {
                                         <span>Status</span>
                                         {this.state.status ? (
                                             <span class="ml-auto"><span class="bg-green-500 py-1 px-2 rounded text-white text-sm">Active</span></span>
-                                        ):(
+                                        ) : (
                                             <span class="ml-auto"><span class="bg-red-500 py-1 px-2 rounded text-white text-sm">Suspend</span></span>
                                         )}
                                     </li>
                                     <li class="flex items-center py-3">
-                                        <span>Member since</span>
-                                        <span class="ml-auto">{this.state.register_date}</span>
+                                        <span>Registered</span>
+                                        <span class="ml-auto">{this.parseDate()}</span>
                                     </li>
                                 </ul>
                             </div>

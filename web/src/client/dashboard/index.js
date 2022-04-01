@@ -207,8 +207,12 @@ export default class Dashboard extends React.Component {
                                                             </td>
                                                             <td class="px-6 py-4 whitespace-nowrap">
                                                                 <div class="text-sm text-gray-900">
-                                                                    Pickup: {data.pickup_date} <br></br>
-                                                                    Dropoff: {data.drop_date}
+                                                                    <div class="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-200 dark:text-green-900">
+                                                                    Pickup: {data.pickup_date} {data.pickup_time}
+                                                                    </div>
+                                                                    <div class="mt-1 bg-red-100 text-red-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-red-200 dark:text-red-900">
+                                                                    Dropoff: {data.drop_date} {data.drop_time}
+                                                                    </div>
                                                                 </div>
                                                             </td>
                                                             <td class="px-6 py-4 whitespace-nowrap">

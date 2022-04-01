@@ -79,13 +79,10 @@ app.post('/', upload.single("photo_profile"), async (req, res) => {
         status: req.body.status,
     }
 
-    console.log("test 1");
-    console.log(req.file);
     if (req.file) {
         data.photo_profile = req.file.filename
 
     }
-    console.log("test 2");
 
     customer.create(data)
         .then(result => {
@@ -129,16 +126,16 @@ app.put('/:id', verify, authGetAccess, upload.single("photo_profile"), async (re
         data.password = encrypt(req.body.password)
     }
 
-    console.log("test 1");
-
     if (req.file) {
         // get data by id
         const row = await customer.findOne({ where: params })
         let oldFileName = row.photo_profile
 
-        // // delete old file
-        let dir = path.join(__dirname, "../../public/image/customer/", oldFileName)
-        fs.unlink(dir, err => console.log(err))
+        if(oldFileName !== null){
+            // // delete old file
+            let dir = path.join(__dirname, "../../public/image/customer/", oldFileName)
+            fs.unlink(dir, err => console.log(err))
+        }
 
         // // // set new filename
         data.photo_profile = req.file.filename

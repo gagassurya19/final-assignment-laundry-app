@@ -95,7 +95,11 @@ export default function NavbarClient() {
                                                         <span className="sr-only">Open user menu</span>
                                                         <img
                                                             className="h-8 w-8 rounded-full"
-                                                            src={ localStorage.getItem('photo_profile_customer') || "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"}
+                                                            src={
+                                                                localStorage.getItem('photo_profile_customer') ?
+                                                                    process.env.REACT_APP_CUSTOMER_API_IMAGE + localStorage.getItem('photo_profile_customer') :
+                                                                    "http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png"
+                                                            }
                                                             alt=""
                                                         />
                                                     </Menu.Button>

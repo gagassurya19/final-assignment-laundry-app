@@ -85,7 +85,7 @@ export class Invoice extends Component {
                 }).then((result) => {
                     if (result.isConfirmed) {
                         window.location = '/home'
-                    } 
+                    }
                 })
                 console.log(err);
             })
@@ -101,7 +101,7 @@ export class Invoice extends Component {
         var canvas_image_width = HTML_Width;
         var canvas_image_height = HTML_Height;
         var totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
-        const fromState = this.state.invoice;
+        const fromState = this.state.invoice_code;
 
         html2canvas($("article")[0], { allowTaint: true }).then(function (canvas) {
             canvas.getContext('2d');
@@ -219,9 +219,13 @@ export class Invoice extends Component {
                                                     )}
                                                 </td>
                                                 <td class="whitespace-nowrap space-x-1 flex items-center">
-                                                    <div>
-                                                        <p> Pickup: {this.state.data_invoice.pickup_date} </p>
-                                                        <p class="text-sm text-gray-400"> Dropoff: {this.state.data_invoice.drop_date} </p>
+                                                    <div class="text-sm text-gray-900">
+                                                        <div class="bg-green-100 text-green-800 text-sm font-medium px-2.5 py-0.5 rounded dark:bg-green-200 dark:text-green-900">
+                                                            Pickup: {this.state.data_invoice.pickup_date} {this.state.data_invoice.pickup_time}
+                                                        </div>
+                                                        <div class="mt-1 bg-red-100 text-red-800 text-sm font-medium px-2.5 py-0.5 rounded dark:bg-red-200 dark:text-red-900">
+                                                            Dropoff: {this.state.data_invoice.drop_date} {this.state.data_invoice.drop_time}
+                                                        </div>
                                                     </div>
                                                 </td>
                                                 <td class="whitespace-nowrap text-gray-600 truncate"> Rp{this.state.data_package.price} </td>
