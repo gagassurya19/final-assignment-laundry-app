@@ -48,22 +48,15 @@ export default class Bio extends React.Component {
         ev.preventDefault();
         const url = process.env.REACT_APP_CUSTOMER_API_URL + 'customer_crud/' + this.state.id_customer
 
-        let data
+        let data = {
+            first_name: this.state.first_name,
+            last_name: this.state.last_name,
+            telephone: this.state.telephone,
+            email: this.state.email,
+        }
+        
         if (this.state.fillPassword) {
-            data = {
-                first_name: this.state.first_name,
-                last_name: this.state.last_name,
-                telephone: this.state.telephone,
-                email: this.state.email,
-                password: this.state.password
-            }
-        } else {
-            data = {
-                first_name: this.state.first_name,
-                last_name: this.state.last_name,
-                telephone: this.state.telephone,
-                email: this.state.email,
-            }
+            data.password = this.state.password
         }
 
         axios.put(url, data, {

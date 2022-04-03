@@ -81,7 +81,6 @@ app.post('/', upload.single("photo_profile"), async (req, res) => {
 
     if (req.file) {
         data.photo_profile = req.file.filename
-
     }
 
     customer.create(data)

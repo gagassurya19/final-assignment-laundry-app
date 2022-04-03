@@ -97,7 +97,7 @@ export default function NavbarClient() {
                                                             className="h-8 w-8 rounded-full"
                                                             src={
                                                                 localStorage.getItem('photo_profile_customer') ?
-                                                                    process.env.REACT_APP_CUSTOMER_API_IMAGE + localStorage.getItem('photo_profile_customer') :
+                                                                    localStorage.getItem('photo_profile_customer') :
                                                                     "http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png"
                                                             }
                                                             alt=""

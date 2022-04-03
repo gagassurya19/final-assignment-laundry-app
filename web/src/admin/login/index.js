@@ -1,16 +1,15 @@
 import React from "react";
+import axios from 'axios';
+import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 
 export default class Login extends React.Component {
     constructor() {
         super()
         this.state = {
-            username: "",
-            password: "",
-            level: "",
-            nisn: "",
-            message: "",
-            logged: true,
+            username: "admin",
+            password: "admin",
+            role: "admin",
             token: ""
         }
         // dapetin token dari localstorage
@@ -18,6 +17,57 @@ export default class Login extends React.Component {
             window.location = "/admin"
         }
     }
+
+    Login = event => {
+        event.preventDefault() // menghilangkan effect refreshpage
+
+        let data = {
+            username: this.state.username,
+            password: this.state.password,
+            role: this.state.role,
+        }
+
+        let url = process.env.REACT_APP_ADMIN_API_URL + "auth_admin"
+
+        axios.post(url, data)
+            .then(response => {
+                if (!response.data.isLogged) {
+                    this.Alert('error', response.data.message)
+                } else {
+                    console.log(response.data.data.register_date);
+                    localStorage.setItem('token_admin', response.data.token)
+                    localStorage.setItem('id_administrator', response.data.data.id_administrator)
+                    localStorage.setItem('status_admin', response.data.data.status)
+                    localStorage.setItem('photo_profile_admin', process.env.REACT_APP_ADMIN_API_IMAGE + response.data.data.photo_profile)
+                    localStorage.setItem('register_date_admin', response.data.data.register_date)
+                    localStorage.setItem('role_admin', response.data.data.role)
+                    localStorage.setItem('name_admin', response.data.data.first_name +" "+ response.data.data.last_name)
+                    this.Alert('success', 'Login berhasil. \nRedirect ke Dashboard')
+                    setTimeout(function () {
+                        window.location = '/admin'
+                    }, 1600);
+                }
+            })
+            .catch(error => {
+                this.Alert('error', error)
+            })
+    }
+
+    Alert = (kind, message) => {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+        })
+
+        Toast.fire({
+            icon: kind,
+            title: message
+        })
+    }
+
     render() {
         return (
             <>
@@ -32,17 +82,11 @@ export default class Login extends React.Component {
                                     Sign in to Dashboard
                                 </div>
                             </h2>
-                            {!this.state.logged ? (
-                                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative my-5 text-center" role="alert">
-                                    <strong class="font-bold">Wadidaw! </strong>
-                                    <span class="block sm:inline">{this.state.message}</span>
-                                </div>
-                            ) : null}
                         </div>
-                        <form class="mt-8 space-y-6" method="POST">
+                        <form class="mt-8 space-y-6" onSubmit={ev => this.Login(ev)}>
                             <div class="rounded-md shadow-sm -space-y-px">
                                 <select required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                                    value={this.state.level} onChange={ev => this.setState({ level: ev.target.value })}>
+                                    value={this.state.role} onChange={ev => this.setState({ role: ev.target.value })}>
                                     <optgroup label="Select Role:">
                                         <option value="admin">Admin</option>
                                         <option value="kasir">Kasir</option>
@@ -52,11 +96,13 @@ export default class Login extends React.Component {
                                 <div>
                                     <label for="username" class="sr-only">Username</label>
                                     <input id="username" name="username" type="text" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Username"
-                                        onChange={ev => this.setState({ no_wa: ev.target.value })} />
+                                        value={this.state.username}
+                                        onChange={ev => this.setState({ username: ev.target.value })} />
                                 </div>
                                 <div>
                                     <label for="password" class="sr-only">Password</label>
                                     <input id="password" name="password" type="password" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Password"
+                                        value={this.state.password}
                                         onChange={ev => this.setState({ password: ev.target.value })} />
                                 </div>
                             </div>

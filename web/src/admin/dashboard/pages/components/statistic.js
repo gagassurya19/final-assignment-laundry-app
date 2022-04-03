@@ -1,7 +1,7 @@
 import React from "react"
 import {Link} from "react-router-dom"
 
-export default function Statistic() {
+export default function Statistic(props) {
     return (
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 px-4 xl:p-0 gap-4 xl:gap-6">
             <div class="col-span-1 md:col-span-2 lg:col-span-4 flex justify-between">
@@ -13,7 +13,7 @@ export default function Statistic() {
                 <div class="flex justify-between items-start">
                     <div class="flex flex-col">
                         <p class="text-xs text-gray-600 tracking-wide">Total Transaksi</p>
-                        <h3 class="mt-1 text-lg text-blue-500 font-bold">818</h3>
+                        <h3 class="mt-1 text-lg text-blue-500 font-bold">{props.transaction_sum}</h3>
                         <span class="mt-4 text-xs text-gray-500">Last Updated 3 Hours ago</span>
                     </div>
                     <div class="bg-blue-500 p-2 md:p-1 xl:p-2 rounded-md">
@@ -28,7 +28,7 @@ export default function Statistic() {
                 <div class="flex justify-between items-start">
                     <div class="flex flex-col">
                         <p class="text-xs text-gray-600 tracking-wide">Total Outlet</p>
-                        <h3 class="mt-1 text-lg text-green-500 font-bold">14</h3>
+                        <h3 class="mt-1 text-lg text-green-500 font-bold">{props.outlet_sum}</h3>
                         <span class="mt-4 text-xs text-gray-500">Last Updated 3 Days ago</span>
                     </div>
                     <div class="bg-green-500 p-2 md:p-1 xl:p-2 rounded-md">
@@ -42,8 +42,8 @@ export default function Statistic() {
             <div class="bg-white p-6 rounded-xl border border-gray-50">
                 <div class="flex justify-between items-start">
                     <div class="flex flex-col">
-                        <p class="text-xs text-gray-600 tracking-wide">Total Member</p>
-                        <h3 class="mt-1 text-lg text-yellow-500 font-bold">10</h3>
+                        <p class="text-xs text-gray-600 tracking-wide">Total Customer</p>
+                        <h3 class="mt-1 text-lg text-yellow-500 font-bold">{props.customer_sum}</h3>
                         <span class="mt-4 text-xs text-gray-600">Last Updated 4 Days ago</span>
                     </div>
                     <div class="bg-yellow-500 p-2 md:p-1 xl:p-2 rounded-md">
@@ -58,7 +58,7 @@ export default function Statistic() {
                 <div class="flex justify-between items-start">
                     <div class="flex flex-col">
                         <p class="text-xs text-gray-600 tracking-wide">Total Paket Laundry</p>
-                        <h3 class="mt-1 text-lg text-indigo-500 font-bold">5</h3>
+                        <h3 class="mt-1 text-lg text-indigo-500 font-bold">{props.package_sum}</h3>
                         <span class="mt-4 text-xs text-gray-500">Last Updated 1 Month ago</span>
                     </div>
                     <div class="bg-indigo-500 p-2 md:p-1 xl:p-2 rounded-md">
