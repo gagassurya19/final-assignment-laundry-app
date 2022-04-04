@@ -6,10 +6,10 @@ const ROLE = {
 }
 
 const GET = {
-    "/admin_administrator": [ROLE.ADMIN],
-    "/admin_customer": [ROLE.ADMIN, ROLE.KASIR],
-    "/admin_outlet": [ROLE.ADMIN],
-    "/admin_package": [ROLE.ADMIN],
+    "/admin_administrator": [ROLE.ADMIN, ROLE.KASIR, ROLE.OWNER],
+    "/admin_customer": [ROLE.ADMIN, ROLE.KASIR, ROLE.OWNER],
+    "/admin_outlet": [ROLE.ADMIN, ROLE.KASIR, ROLE.OWNER],
+    "/admin_package": [ROLE.ADMIN, ROLE.KASIR, ROLE.OWNER],
     "/admin_address_customer": [ROLE.ADMIN, ROLE.KASIR],
     "/admin_payment_customer": [ROLE.ADMIN, ROLE.KASIR],
     "/admin_transaction": [ROLE.ADMIN, ROLE.KASIR, ROLE.OWNER],
@@ -21,7 +21,7 @@ const GET = {
 }
 
 const POST = {
-    "/admin_administrator": [ROLE.ADMIN],
+    "/admin_administrator": [ROLE.ADMIN, ROLE.KASIR, ROLE.OWNER],
     "/admin_customer": [ROLE.ADMIN, ROLE.KASIR],
     "/admin_outlet": [ROLE.ADMIN],
     "/admin_package": [ROLE.ADMIN],
@@ -35,7 +35,7 @@ const POST = {
 }
 
 const PUT = {
-    "/admin_administrator": [ROLE.ADMIN],
+    "/admin_administrator": [ROLE.ADMIN, ROLE.KASIR, ROLE.OWNER],
     "/admin_customer": [ROLE.ADMIN, ROLE.KASIR],
     "/admin_outlet": [ROLE.ADMIN],
     "/admin_package": [ROLE.ADMIN],

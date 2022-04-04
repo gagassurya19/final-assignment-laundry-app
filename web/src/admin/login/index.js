@@ -34,18 +34,21 @@ export default class Login extends React.Component {
                 if (!response.data.isLogged) {
                     this.Alert('error', response.data.message)
                 } else {
-                    console.log(response.data.data.register_date);
-                    localStorage.setItem('token_admin', response.data.token)
-                    localStorage.setItem('id_administrator', response.data.data.id_administrator)
-                    localStorage.setItem('status_admin', response.data.data.status)
-                    localStorage.setItem('photo_profile_admin', process.env.REACT_APP_ADMIN_API_IMAGE + response.data.data.photo_profile)
-                    localStorage.setItem('register_date_admin', response.data.data.register_date)
-                    localStorage.setItem('role_admin', response.data.data.role)
-                    localStorage.setItem('name_admin', response.data.data.first_name +" "+ response.data.data.last_name)
-                    this.Alert('success', 'Login berhasil. \nRedirect ke Dashboard')
-                    setTimeout(function () {
-                        window.location = '/admin'
-                    }, 1600);
+                    if (response.data.data.status) {
+                        localStorage.setItem('token_admin', response.data.token)
+                        localStorage.setItem('id_administrator', response.data.data.id_administrator)
+                        localStorage.setItem('status_admin', Number(response.data.data.status))
+                        localStorage.setItem('photo_profile_admin', process.env.REACT_APP_ADMIN_API_IMAGE + response.data.data.photo_profile)
+                        localStorage.setItem('register_date_admin', response.data.data.register_date)
+                        localStorage.setItem('role_admin', response.data.data.role)
+                        localStorage.setItem('name_admin', response.data.data.first_name + " " + response.data.data.last_name)
+                        this.Alert('success', 'Login berhasil. \nRedirect ke Dashboard')
+                        setTimeout(function () {
+                            window.location = '/admin'
+                        }, 1600);
+                    } else {
+                        this.Alert('error', "Akun kamu sedang di nonaktifkan")
+                    }
                 }
             })
             .catch(error => {

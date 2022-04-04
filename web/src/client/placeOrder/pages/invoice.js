@@ -22,7 +22,7 @@ export class Invoice extends Component {
         super();
         this.state = {
             id_customer: localStorage.getItem('id_customer'),
-            token: localStorage.getItem('token_customer'),
+            token: localStorage.getItem('token_customer') || localStorage.getItem('token_admin'),
             invoice_code: null,
             data_invoice: {},
             data_outlet: {},

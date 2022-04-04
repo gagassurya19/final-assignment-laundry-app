@@ -72,6 +72,10 @@ app.post('/', async (req, res) => {
         notes: req.body.notes
     }
 
+    if(req.body.status){
+        data.status = req.body.status
+    }
+
     outlet.create(data)
         .then(result => {
             res.json({
@@ -96,6 +100,10 @@ app.put('/:id', async (req, res) => {
         telephone: req.body.telephone,
         address: req.body.address,
         notes: req.body.notes
+    }
+
+    if(req.body.status){
+        data.status = req.body.status
     }
 
     let id = {

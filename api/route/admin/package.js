@@ -70,6 +70,10 @@ app.post('/', async (req, res) => {
         notes: req.body.notes
     }
 
+    if(req.body.status){
+        data.status = req.body.status
+    }
+
     package.create(data)
         .then(result => {
             res.json({
@@ -92,6 +96,10 @@ app.put('/:id', async (req, res) => {
         name: req.body.name,
         price: req.body.price,
         notes: req.body.notes
+    }
+
+    if(req.body.status){
+        data.status = req.body.status
     }
 
     let id = {

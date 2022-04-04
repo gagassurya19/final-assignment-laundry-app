@@ -19,10 +19,14 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(255),
       allowNull: true,
       comment: "optional"
+    },
+    status: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 1
     }
   }, {
     sequelize,
-    modelName: 'package',
     tableName: 'package',
     timestamps: false,
     indexes: [

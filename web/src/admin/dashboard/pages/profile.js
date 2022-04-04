@@ -229,15 +229,23 @@ export default class Profile extends React.Component {
                                 <ul class="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">
                                     <li class="flex items-center py-3">
                                         <span>Status</span>
-                                        {this.state.status ? (
-                                            <span class="ml-auto"><span class="bg-green-500 py-1 px-2 rounded text-white text-sm">Active</span></span>
+                                        {this.state.status == 1 ? (
+                                            <span class="ml-auto">
+                                                <span class="bg-green-500 py-1 px-2 rounded text-white text-sm">
+                                                    Active
+                                                </span>
+                                            </span>
                                         ) : (
-                                            <span class="ml-auto"><span class="bg-red-500 py-1 px-2 rounded text-white text-sm">Suspend</span></span>
+                                            <span class="ml-auto">
+                                                <span class="bg-red-500 py-1 px-2 rounded text-white text-sm">
+                                                    Suspend
+                                                </span>
+                                            </span>
                                         )}
                                     </li>
                                     <li class="flex items-center py-3">
                                         <span>Role</span>
-                                        <span class="ml-auto">{"admin"}</span>
+                                        <span class="ml-auto">{this.state.role}</span>
                                     </li>
                                 </ul>
                             </div>

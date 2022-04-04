@@ -126,23 +126,45 @@ export default class modal_Outlet extends React.Component {
                                 <div class="grid grid-cols-6 gap-6">
                                     <div class="col-span-12 sm:col-span-12 w-full">
                                         {this.state.data.map((data, index) => (
-                                            <button type="button" class="inline-flex relative items-center py-5 px-4 w-full text-sm font-medium border-b hover:bg-gray-100 focus:z-10 focus:ring-2">
-                                                <label class="inline-flex items-center">
-                                                    <input type="radio" class="form-radio mr-2" name="accountType"
-                                                        value={index}
-                                                        onChange={this.onValueChange} />
-                                                    <div class="flex justify-between">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                                                        </svg>
-                                                        <span class="flex flex-col text-left pl-2">
-                                                            <span class="title-font font-medium text-gray-900">{data.outlet_name}</span>
-                                                            <span class="text-gray-500 text-sm">{data.telephone}</span>
+                                            (data.status === 1 ? (
+                                                <button type="button" class="inline-flex relative items-center py-5 px-4 w-full text-sm font-medium border-b hover:bg-gray-100 focus:z-10 focus:ring-2">
+                                                    <label class="inline-flex items-center">
+                                                        <input type="radio" class="form-radio mr-2" name="accountType"
+                                                            value={index}
+                                                            onChange={this.onValueChange} />
+                                                        <div class="flex justify-between">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                            </svg>
+                                                            <span class="flex flex-col text-left pl-2">
+                                                                <span class="title-font font-medium text-gray-900">{data.outlet_name}</span>
+                                                                <span class="text-gray-500 text-sm">{data.address}</span>
+                                                                <span class="text-gray-500 text-sm">(+62){data.telephone}</span>
+                                                            </span>
+                                                        </div>
+                                                    </label>
+                                                </button>
+                                            ) : (
+                                                <button type="button" class="inline-flex relative items-center py-5 px-4 w-full text-sm font-medium border-b hover:bg-gray-100  focus:z-10 focus:ring-2 ">
+                                                    <label class="inline-flex items-center">
+                                                        <div class="flex justify-between">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                            </svg>
+                                                            <span class="flex flex-col text-left pl-2">
+                                                                <span class="title-font font-medium text-gray-900">{data.outlet_name}</span>
+                                                                <span class="text-gray-500 text-sm">{data.address}</span>
+                                                                <span class="text-gray-500 text-sm">(+62){data.telephone}</span>
+                                                            </span>
+                                                        </div>
+                                                        <span class="ml-4 bg-red-100 text-red-800 text-lg font-medium leading-6 mr-2 px-2.5 py-0.5 rounded dark:bg-red-200 dark:text-red-900">
+                                                            TUTUP
                                                         </span>
-                                                    </div>
-                                                </label>
-                                            </button>
+                                                    </label>
+                                                </button>
+                                            ))
                                         ))}
                                     </div>
                                 </div>
