@@ -1,0 +1,1270 @@
+{
+	"version": 1,
+	"collections": [
+		{
+			"id": "c6effcee-f6aa-45aa-878d-47d7dcdd1ace",
+			"uid": "0-c6effcee-f6aa-45aa-878d-47d7dcdd1ace",
+			"name": "laundry",
+			"description": null,
+			"auth": null,
+			"events": null,
+			"variables": [],
+			"order": [],
+			"folders_order": [
+				"431a3996-62f2-404c-a8a1-2f15c5963839",
+				"0db7ef29-1608-449c-9f24-cd6523c29c94",
+				"b14eed31-f066-4fb1-ae74-3468405488be"
+			],
+			"protocolProfileBehavior": {},
+			"createdAt": "2022-03-23T00:15:11.777Z",
+			"folders": [
+				{
+					"id": "431a3996-62f2-404c-a8a1-2f15c5963839",
+					"uid": "0-431a3996-62f2-404c-a8a1-2f15c5963839",
+					"name": "admin",
+					"description": null,
+					"auth": null,
+					"events": null,
+					"collection": "c6effcee-f6aa-45aa-878d-47d7dcdd1ace",
+					"folder": null,
+					"order": [
+						"809d11f9-afe0-4c7c-bbf2-5d1e15466113",
+						"b30f952d-5682-405b-bd65-f061552a3329",
+						"de0cffa7-56aa-4eb6-95fd-0956c924bcdd",
+						"66608177-7f47-45ab-84f2-cfa1d474d2e9",
+						"d681dd25-c9d9-4af4-8863-77da94ba36e4",
+						"7625d592-68aa-4e05-a8c9-6c72881221dc",
+						"49740c45-7ec9-4df5-8f48-8e6a040ea7df"
+					],
+					"folders_order": [],
+					"owner": "0",
+					"protocolProfileBehavior": {},
+					"createdAt": "2022-03-23T04:35:40.767Z",
+					"collectionId": "c6effcee-f6aa-45aa-878d-47d7dcdd1ace",
+					"folderId": "431a3996-62f2-404c-a8a1-2f15c5963839"
+				},
+				{
+					"id": "b14eed31-f066-4fb1-ae74-3468405488be",
+					"uid": "0-b14eed31-f066-4fb1-ae74-3468405488be",
+					"name": "auth",
+					"description": null,
+					"auth": null,
+					"events": null,
+					"collection": "c6effcee-f6aa-45aa-878d-47d7dcdd1ace",
+					"folder": null,
+					"order": [
+						"e38fcd43-3cbc-437d-a8be-50c7d8fa93cc",
+						"bf210142-dc3c-4e70-ad57-a416f6aa3255"
+					],
+					"folders_order": [],
+					"owner": "0",
+					"protocolProfileBehavior": {},
+					"createdAt": "2022-03-23T04:41:39.952Z",
+					"collectionId": "c6effcee-f6aa-45aa-878d-47d7dcdd1ace",
+					"folderId": "b14eed31-f066-4fb1-ae74-3468405488be"
+				},
+				{
+					"id": "0db7ef29-1608-449c-9f24-cd6523c29c94",
+					"uid": "0-0db7ef29-1608-449c-9f24-cd6523c29c94",
+					"name": "customer",
+					"description": null,
+					"auth": null,
+					"events": null,
+					"collection": "c6effcee-f6aa-45aa-878d-47d7dcdd1ace",
+					"folder": null,
+					"order": [
+						"7df3647e-0708-4d06-b14a-0db4d7228127",
+						"186c2321-293c-44de-8f67-533b25e4dbd1",
+						"a630200e-10d5-484c-827c-1a31e01d5b79",
+						"e4ad1168-41d2-432c-8e54-f672457f5d0f",
+						"37ee3c82-54e8-451d-96a2-2c995ac7040a",
+						"84cd6197-cfda-4196-8ba1-d9864764b87e",
+						"9d3e15fd-3bd8-43aa-a806-ebb6f6d1766d"
+					],
+					"folders_order": [],
+					"owner": "0",
+					"protocolProfileBehavior": {},
+					"createdAt": "2022-03-23T04:36:53.201Z",
+					"collectionId": "c6effcee-f6aa-45aa-878d-47d7dcdd1ace",
+					"folderId": "0db7ef29-1608-449c-9f24-cd6523c29c94"
+				}
+			],
+			"requests": [
+				{
+					"id": "186c2321-293c-44de-8f67-533b25e4dbd1",
+					"uid": "0-186c2321-293c-44de-8f67-533b25e4dbd1",
+					"name": "outlet",
+					"url": "http://localhost:{{port}}/customer_outlet",
+					"description": null,
+					"data": null,
+					"dataOptions": null,
+					"dataMode": null,
+					"headerData": null,
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							}
+						]
+					},
+					"events": null,
+					"folder": "0db7ef29-1608-449c-9f24-cd6523c29c94",
+					"responses_order": [],
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "{{token}}"
+					},
+					"collectionId": "c6effcee-f6aa-45aa-878d-47d7dcdd1ace",
+					"pathVariables": {}
+				},
+				{
+					"id": "37ee3c82-54e8-451d-96a2-2c995ac7040a",
+					"uid": "0-37ee3c82-54e8-451d-96a2-2c995ac7040a",
+					"name": "transaction",
+					"url": "http://localhost:{{port}}/customer_transaction/38",
+					"description": null,
+					"data": [
+						{
+							"key": "id_customer",
+							"value": "38",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "id_administrator",
+							"value": "1",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "id_address_customer",
+							"value": "1",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "id_package",
+							"value": "1",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "id_outlet",
+							"value": "2",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "id_payment_customer",
+							"value": "1",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "invoice_code",
+							"value": "qweqw",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "pickup_date",
+							"value": "2022-03-23",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "drop_date",
+							"value": "2022-03-25",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "pickup_time",
+							"value": "9:15:00 AM",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "drop_time",
+							"value": "9:15:00 AM",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "notes_laundry",
+							"value": "laundry notes",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "notes_driver",
+							"value": "driver notes",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "status",
+							"value": "0",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"dataOptions": null,
+					"dataMode": "urlencoded",
+					"headerData": null,
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							}
+						]
+					},
+					"events": null,
+					"folder": "0db7ef29-1608-449c-9f24-cd6523c29c94",
+					"responses_order": [],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "{{token}}"
+					},
+					"collectionId": "c6effcee-f6aa-45aa-878d-47d7dcdd1ace",
+					"pathVariables": {}
+				},
+				{
+					"id": "49740c45-7ec9-4df5-8f48-8e6a040ea7df",
+					"uid": "0-49740c45-7ec9-4df5-8f48-8e6a040ea7df",
+					"name": "transaction",
+					"url": "http://localhost:{{port}}/admin_transaction/38",
+					"description": null,
+					"data": [
+						{
+							"key": "id_customer",
+							"value": "1",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "id_address_customer",
+							"value": "1",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "id_package",
+							"value": "1",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "id_outlet",
+							"value": "2",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "id_payment_customer",
+							"value": "1",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "invoice_code",
+							"value": "qweqw",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "pickup_date",
+							"value": "2022-03-23",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "drop_date",
+							"value": "2022-03-25",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "notes_laundry",
+							"value": "laundry notes",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "notes_driver",
+							"value": "driver notes",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "status",
+							"value": "1",
+							"description": "",
+							"type": "default",
+							"enabled": true
+						}
+					],
+					"dataOptions": null,
+					"dataMode": "urlencoded",
+					"headerData": null,
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							}
+						]
+					},
+					"events": null,
+					"folder": "431a3996-62f2-404c-a8a1-2f15c5963839",
+					"responses_order": [],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "{{token}}"
+					},
+					"collectionId": "c6effcee-f6aa-45aa-878d-47d7dcdd1ace",
+					"pathVariables": {}
+				},
+				{
+					"id": "66608177-7f47-45ab-84f2-cfa1d474d2e9",
+					"uid": "0-66608177-7f47-45ab-84f2-cfa1d474d2e9",
+					"name": "outlet",
+					"url": "http://localhost:{{port}}/admin_outlet",
+					"description": null,
+					"data": [
+						{
+							"key": "id_administrator",
+							"value": "2",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "outlet_name",
+							"value": "Outlet Sawojajar",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "telephone",
+							"value": "08123142412314",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "address",
+							"value": "Jl. Danau Ranau E5G26",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "notes",
+							"value": "Outlet utama",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"dataOptions": null,
+					"dataMode": "urlencoded",
+					"headerData": null,
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							}
+						]
+					},
+					"events": null,
+					"folder": "431a3996-62f2-404c-a8a1-2f15c5963839",
+					"responses_order": [],
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "{{token}}"
+					},
+					"collectionId": "c6effcee-f6aa-45aa-878d-47d7dcdd1ace",
+					"pathVariables": {}
+				},
+				{
+					"id": "7625d592-68aa-4e05-a8c9-6c72881221dc",
+					"uid": "0-7625d592-68aa-4e05-a8c9-6c72881221dc",
+					"name": "payment_customer",
+					"url": "http://localhost:{{port}}/admin_payment_customer/",
+					"description": null,
+					"data": [
+						{
+							"key": "id_customer",
+							"value": "1",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "payment_name",
+							"value": "qwe",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "payment_number",
+							"value": "123",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "payment_bank_name",
+							"value": "qwe",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "notes",
+							"value": "",
+							"description": "",
+							"type": "text",
+							"enabled": false
+						}
+					],
+					"dataOptions": null,
+					"dataMode": "urlencoded",
+					"headerData": null,
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							}
+						]
+					},
+					"events": null,
+					"folder": "431a3996-62f2-404c-a8a1-2f15c5963839",
+					"responses_order": [],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "{{token}}"
+					},
+					"collectionId": "c6effcee-f6aa-45aa-878d-47d7dcdd1ace",
+					"pathVariables": {}
+				},
+				{
+					"id": "7df3647e-0708-4d06-b14a-0db4d7228127",
+					"uid": "0-7df3647e-0708-4d06-b14a-0db4d7228127",
+					"name": "address_customer",
+					"url": "http://localhost:{{port}}/customer_address_customer/",
+					"description": null,
+					"data": [
+						{
+							"key": "id_customer",
+							"value": "38",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "address_name",
+							"value": "rumah mantan",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "address_detail",
+							"value": "jl. kenangan",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "telephone",
+							"value": "08123123123123",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "notes",
+							"value": "ini harusnya ada notes, tapi hilang entah kemana",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"dataOptions": null,
+					"dataMode": "urlencoded",
+					"headerData": null,
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							}
+						]
+					},
+					"events": null,
+					"folder": "0db7ef29-1608-449c-9f24-cd6523c29c94",
+					"responses_order": [],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "{{token}}"
+					},
+					"collectionId": "c6effcee-f6aa-45aa-878d-47d7dcdd1ace",
+					"pathVariables": {}
+				},
+				{
+					"id": "809d11f9-afe0-4c7c-bbf2-5d1e15466113",
+					"uid": "0-809d11f9-afe0-4c7c-bbf2-5d1e15466113",
+					"name": "administrator",
+					"url": "http://localhost:{{port}}/admin_administrator",
+					"description": null,
+					"data": [
+						{
+							"key": "first_name",
+							"value": "owner",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "last_name",
+							"value": "owner",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "username",
+							"value": "owner",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "password",
+							"value": "owner",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "email",
+							"value": "owner@owner.owner",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "telephone",
+							"value": "124124124124124124124",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "photo_profile",
+							"value": "",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "role",
+							"value": "owner",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "status",
+							"value": "1",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"dataOptions": null,
+					"dataMode": "urlencoded",
+					"headerData": null,
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							}
+						]
+					},
+					"events": null,
+					"folder": "431a3996-62f2-404c-a8a1-2f15c5963839",
+					"responses_order": [],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "{{token}}"
+					},
+					"collectionId": "c6effcee-f6aa-45aa-878d-47d7dcdd1ace",
+					"pathVariables": {}
+				},
+				{
+					"id": "84cd6197-cfda-4196-8ba1-d9864764b87e",
+					"uid": "0-84cd6197-cfda-4196-8ba1-d9864764b87e",
+					"name": "customer_crud",
+					"url": "http://localhost:{{port}}/customer_crud",
+					"description": null,
+					"data": [
+						{
+							"key": "first_name",
+							"value": "asdasd",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "last_name",
+							"value": "asdasd",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "telephone",
+							"value": "123321123321",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "email",
+							"value": "customer@customer.customer",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "password",
+							"value": "123321123321",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "photo_profile",
+							"value": "/Users/mac/Desktop/kos/P1230325.JPG",
+							"description": "",
+							"type": "file",
+							"enabled": true
+						},
+						{
+							"key": "status",
+							"value": "1",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"dataOptions": null,
+					"dataMode": "params",
+					"headerData": null,
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							}
+						]
+					},
+					"events": null,
+					"folder": "0db7ef29-1608-449c-9f24-cd6523c29c94",
+					"responses_order": [],
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "{{token}}"
+					},
+					"collectionId": "c6effcee-f6aa-45aa-878d-47d7dcdd1ace",
+					"pathVariables": {}
+				},
+				{
+					"id": "9d3e15fd-3bd8-43aa-a806-ebb6f6d1766d",
+					"uid": "0-9d3e15fd-3bd8-43aa-a806-ebb6f6d1766d",
+					"name": "invoice",
+					"url": "http://localhost:{{port}}/customer_invoice/INV4824171766816591",
+					"description": null,
+					"data": null,
+					"dataOptions": null,
+					"dataMode": null,
+					"headerData": null,
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							}
+						]
+					},
+					"events": null,
+					"folder": "0db7ef29-1608-449c-9f24-cd6523c29c94",
+					"responses_order": [],
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "{{token}}"
+					},
+					"collectionId": "c6effcee-f6aa-45aa-878d-47d7dcdd1ace",
+					"pathVariables": {}
+				},
+				{
+					"id": "a630200e-10d5-484c-827c-1a31e01d5b79",
+					"uid": "0-a630200e-10d5-484c-827c-1a31e01d5b79",
+					"name": "package",
+					"url": "http://localhost:{{port}}/customer_package",
+					"description": null,
+					"data": null,
+					"dataOptions": null,
+					"dataMode": null,
+					"headerData": null,
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							}
+						]
+					},
+					"events": null,
+					"folder": "0db7ef29-1608-449c-9f24-cd6523c29c94",
+					"responses_order": [],
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "{{token}}"
+					},
+					"collectionId": "c6effcee-f6aa-45aa-878d-47d7dcdd1ace",
+					"pathVariables": {}
+				},
+				{
+					"id": "b30f952d-5682-405b-bd65-f061552a3329",
+					"uid": "0-b30f952d-5682-405b-bd65-f061552a3329",
+					"name": "customer",
+					"url": "http://localhost:{{port}}/admin_customer/",
+					"description": null,
+					"data": [
+						{
+							"key": "first_name",
+							"value": "customer",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "last_name",
+							"value": "customer",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "telephone",
+							"value": "123",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "email",
+							"value": "customer@customer.customer",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "password",
+							"value": "customer",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "photo_profile",
+							"value": "asdasdas",
+							"description": "",
+							"type": "text",
+							"enabled": false
+						},
+						{
+							"key": "status",
+							"value": "1",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"dataOptions": null,
+					"dataMode": "urlencoded",
+					"headerData": null,
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							}
+						]
+					},
+					"events": null,
+					"folder": "431a3996-62f2-404c-a8a1-2f15c5963839",
+					"responses_order": [],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "{{token}}"
+					},
+					"collectionId": "c6effcee-f6aa-45aa-878d-47d7dcdd1ace",
+					"pathVariables": {}
+				},
+				{
+					"id": "bf210142-dc3c-4e70-ad57-a416f6aa3255",
+					"uid": "0-bf210142-dc3c-4e70-ad57-a416f6aa3255",
+					"name": "customer",
+					"url": "http://localhost:{{port}}/auth_customer",
+					"description": null,
+					"data": [
+						{
+							"key": "telephone",
+							"value": "123",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "password",
+							"value": "customer",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"dataOptions": null,
+					"dataMode": "urlencoded",
+					"headerData": null,
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": null,
+					"folder": "b14eed31-f066-4fb1-ae74-3468405488be",
+					"responses_order": [],
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "c6effcee-f6aa-45aa-878d-47d7dcdd1ace",
+					"pathVariables": {}
+				},
+				{
+					"id": "d681dd25-c9d9-4af4-8863-77da94ba36e4",
+					"uid": "0-d681dd25-c9d9-4af4-8863-77da94ba36e4",
+					"name": "address_customer",
+					"url": "http://localhost:{{port}}/admin_address_customer/",
+					"description": null,
+					"data": [
+						{
+							"key": "id_customer",
+							"value": "1",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "address_name",
+							"value": "qwe",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "address_detail",
+							"value": "qwe",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "telephone",
+							"value": "124",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "notes",
+							"value": "",
+							"description": "",
+							"type": "text",
+							"enabled": false
+						}
+					],
+					"dataOptions": null,
+					"dataMode": "urlencoded",
+					"headerData": null,
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							}
+						]
+					},
+					"events": null,
+					"folder": "431a3996-62f2-404c-a8a1-2f15c5963839",
+					"responses_order": [],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "{{token}}"
+					},
+					"collectionId": "c6effcee-f6aa-45aa-878d-47d7dcdd1ace",
+					"pathVariables": {}
+				},
+				{
+					"id": "de0cffa7-56aa-4eb6-95fd-0956c924bcdd",
+					"uid": "0-de0cffa7-56aa-4eb6-95fd-0956c924bcdd",
+					"name": "package",
+					"url": "http://localhost:{{port}}/admin_package",
+					"description": null,
+					"data": [
+						{
+							"key": "name",
+							"value": "Paket 1 kg",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "price",
+							"value": "5000",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "notes",
+							"value": "paket untuk bulan april",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"dataOptions": null,
+					"dataMode": "urlencoded",
+					"headerData": null,
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							}
+						]
+					},
+					"events": null,
+					"folder": "431a3996-62f2-404c-a8a1-2f15c5963839",
+					"responses_order": [],
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "{{token}}"
+					},
+					"collectionId": "c6effcee-f6aa-45aa-878d-47d7dcdd1ace",
+					"pathVariables": {}
+				},
+				{
+					"id": "e38fcd43-3cbc-437d-a8be-50c7d8fa93cc",
+					"uid": "0-e38fcd43-3cbc-437d-a8be-50c7d8fa93cc",
+					"name": "admin",
+					"url": "http://localhost:{{port}}/auth_admin",
+					"description": null,
+					"data": [
+						{
+							"key": "username",
+							"value": "owner",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "password",
+							"value": "owner",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "role",
+							"value": "owner",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"dataOptions": null,
+					"dataMode": "urlencoded",
+					"headerData": null,
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": null,
+					"folder": "b14eed31-f066-4fb1-ae74-3468405488be",
+					"responses_order": [],
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "c6effcee-f6aa-45aa-878d-47d7dcdd1ace",
+					"pathVariables": {}
+				},
+				{
+					"id": "e4ad1168-41d2-432c-8e54-f672457f5d0f",
+					"uid": "0-e4ad1168-41d2-432c-8e54-f672457f5d0f",
+					"name": "payment_customer",
+					"url": "http://localhost:{{port}}/customer_payment_customer/38",
+					"description": null,
+					"data": [
+						{
+							"key": "id_customer",
+							"value": "38",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "payment_name",
+							"value": "Rekening utama",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "payment_number",
+							"value": "04123123124",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "payment_bank_name",
+							"value": "BCA",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "notes",
+							"value": "",
+							"description": "",
+							"type": "text",
+							"enabled": false
+						}
+					],
+					"dataOptions": null,
+					"dataMode": "urlencoded",
+					"headerData": null,
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							}
+						]
+					},
+					"events": null,
+					"folder": "0db7ef29-1608-449c-9f24-cd6523c29c94",
+					"responses_order": [],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "{{token}}"
+					},
+					"collectionId": "c6effcee-f6aa-45aa-878d-47d7dcdd1ace",
+					"pathVariables": {}
+				}
+			]
+		}
+	],
+	"environments": [
+		{
+			"id": "474ec6c4-33fe-4fff-adc1-1652e6d20cf8",
+			"name": "token_customer",
+			"values": [
+				{
+					"key": "token",
+					"value": "token",
+					"type": "default",
+					"enabled": true
+				}
+			]
+		},
+		{
+			"id": "48d7986d-d50a-4b84-9ae9-9ef1a1918c5a",
+			"name": "token_kasir",
+			"values": [
+				{
+					"key": "token",
+					"value": "token",
+					"type": "default",
+					"enabled": true
+				}
+			]
+		},
+		{
+			"id": "9f1bf65d-af69-4a8f-aa9b-5ac9ee455a7f",
+			"name": "token_owner",
+			"values": [
+				{
+					"key": "token",
+					"value": "token",
+					"type": "default",
+					"enabled": true
+				}
+			]
+		},
+		{
+			"id": "d6ee3212-9dff-4a0c-8152-1f795badda7a",
+			"name": "token_admin",
+			"values": [
+				{
+					"key": "token",
+					"value": "token",
+					"type": "default",
+					"enabled": true
+				}
+			]
+		},
+		{
+			"id": "a4144a16-b786-44b0-a89e-0a82a8ac7f62",
+			"name": "My Workspace - globals",
+			"values": [
+				{
+					"key": "port",
+					"value": "port",
+					"type": "default",
+					"enabled": true
+				}
+			]
+		}
+	],
+	"headerPresets": [],
+	"globals": []
+}
