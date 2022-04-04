@@ -107,7 +107,9 @@ export default class Modal_pickup extends React.Component {
                                 <Flatpickr
                                     value={date}
                                     options={{
+                                        dateFormat: "Y-m-d",
                                         minDate: 'today',
+                                        maxDate: new Date().fp_incr(15), // 15 days from now
                                         inline: true,
                                         disable: [
                                             function (date) {
@@ -116,12 +118,11 @@ export default class Modal_pickup extends React.Component {
                                             }
                                         ],
                                     }}
-                                    onChange={date => {
-                                        this.setState({ date });
-                                        this.setState({ selected_date: date[0].toLocaleDateString() });
+                                    onChange={(date, dateStr) => {
+                                        console.log(dateStr);
+                                        this.setState({ selected_date: dateStr });
                                         sessionStorage.setItem("pickup_date", this.state.selected_date);
-                                    }}
-                                />
+                                    }} />
                                 <h3 class="text-lg font-medium leading-6 text-gray-900 mt-5">Select Time: {this.state.selected_time}</h3>
                                 <Flatpickr
                                     value={time}
@@ -134,12 +135,11 @@ export default class Modal_pickup extends React.Component {
                                         maxTime: "15:30",
                                         time_24hr: true
                                     }}
-                                    onChange={time => {
-                                        this.setState({ time });
-                                        this.setState({ selected_time: time[0].toLocaleTimeString() });
+                                    onChange={(time, timeStr) => {
+                                        console.log(timeStr);
+                                        this.setState({ selected_time: timeStr });
                                         sessionStorage.setItem("pickup_time", this.state.selected_time);
-                                    }}
-                                />
+                                    }} />
                             </div>
                             <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
                                 <button

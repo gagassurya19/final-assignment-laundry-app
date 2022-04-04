@@ -76,9 +76,9 @@ export default class Dashboard extends React.Component {
 
     // get all data
     getAllData = async () => {
-        // get admin data
-        const url_admin = process.env.REACT_APP_ADMIN_API_URL + 'admin_outlet'
-        await axios.get(url_admin, {
+        // get outlet data
+        const url_outlet = process.env.REACT_APP_ADMIN_API_URL + 'admin_outlet'
+        await axios.get(url_outlet, {
             headers: {
                 Authorization: "Bearer " + this.state.data_admin.token
             }
@@ -94,8 +94,8 @@ export default class Dashboard extends React.Component {
 
         // ==========================================================
         // get transaction data
-        const url = process.env.REACT_APP_ADMIN_API_URL + 'admin_transaction'
-        await axios.get(url, {
+        const url_transaction = process.env.REACT_APP_ADMIN_API_URL + 'admin_transaction'
+        await axios.get(url_transaction, {
             headers: {
                 Authorization: "Bearer " + this.state.data_admin.token
             }
