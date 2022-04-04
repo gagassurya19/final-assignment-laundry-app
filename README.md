@@ -2,7 +2,7 @@
 ![Dashboard Image](https://github.com/gagassurya19/The-Real-Laundry-App/blob/main/docs/image/admin-page/dashboard/Screen%20Shot%202022-04-04%20at%2020.31.17.png)
 
 # Final assignment from productive class
-This is my final assignment from SMK Telkom Malang at April 2022. Special thanks to [@Wisnusat](https://github.com/Wisnusat) for your insight 🤖 
+This is my final assignment from SMK Telkom Malang at April 2022. Special thanks to [@Wisnusat](https://github.com/Wisnusat) for your insight🤖 
 
 See you in the up coming project, cheers🍻
 
