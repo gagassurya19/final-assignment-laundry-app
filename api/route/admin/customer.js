@@ -2,6 +2,10 @@ const express = require('express')
 const app = express()
 const CryptoJS = require("crypto-js");
 
+const multer = require("multer"); //multer digunakan untuk membaca data request dari form-data
+const path = require("path"); //path untuk menage alamat direktori file
+const fs = require("fs"); // fs atau fole stream digunakan untuk manage file
+
 // Panggil Model dari sequelize db:migrate
 const customer = require("../../models/index").customer
 
@@ -25,6 +29,17 @@ const secretKey = process.env.SECRETKEY;
 const encrypt = (nakedText) => {
     return hash = CryptoJS.HmacSHA256(nakedText, secretKey).toString()
 }
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, "./public/image/customer");
+    },
+    filename: (req, file, cb) => {
+        cb(null, "image-" + Date.now() + path.extname(file.originalname));
+    },
+});
+
+const upload = multer({ storage: storage });
 
 // Bagian CRUD [Create, Read, Update, Delete]
 // Get data
@@ -72,7 +87,8 @@ app.get('/:id', async (req, res) => {
 })
 
 // Add data
-app.post('/', async (req, res) => {
+app.post('/', upload.single("photo_profile"), async (req, res) => {
+
     // Deklarasi semua variable dalam table database member
     let data = {
         first_name: req.body.first_name,
@@ -80,8 +96,11 @@ app.post('/', async (req, res) => {
         telephone: req.body.telephone,
         email: req.body.email,
         password: encrypt(req.body.password),
-        photo_profile: req.body.photo_profile,
-        status: req.body.status
+        status: req.body.status,
+    }
+
+    if (req.file) {
+        data.photo_profile = req.file.filename
     }
 
     customer.create(data)
@@ -101,26 +120,47 @@ app.post('/', async (req, res) => {
 })
 
 // Update data
-app.put('/:id', async (req, res) => {
-    let data = {
-        first_name: req.body.first_name,
-        last_name: req.body.last_name,
-        telephone: req.body.telephone,
-        email: req.body.email,
-        photo_profile: req.body.photo_profile,
-        register_date: req.body.register_date,
-        status: req.body.status
-    }
-
-    let id = {
+app.put('/:id', upload.single("photo_profile"), async (req, res) => {
+    let params = {
         id_customer: req.params.id
     }
 
-    if(req.body.password){
+    let data = {}
+
+    if (req.body.first_name ||
+        req.body.last_name ||
+        req.body.telephone ||
+        req.body.email ||
+        req.body.register_date ||
+        req.body.status) {
+        data.first_name = req.body.first_name,
+            data.last_name = req.body.last_name,
+            data.telephone = req.body.telephone,
+            data.email = req.body.email,
+            data.register_date = req.body.register_date,
+            data.status = req.body.status
+    }
+
+    if (req.body.password) {
         data.password = encrypt(req.body.password)
     }
 
-    customer.update(data, { where: id })
+    if (req.file) {
+        // get data by id
+        const row = await customer.findOne({ where: params })
+        let oldFileName = row.photo_profile
+
+        if(oldFileName !== null){
+            // // delete old file
+            let dir = path.join(__dirname, "../../public/image/customer/", oldFileName)
+            fs.unlink(dir, err => console.log(err))
+        }
+
+        // // // set new filename
+        data.photo_profile = req.file.filename
+    }
+
+    customer.update(data, { where: params })
         .then(result => {
             res.json({
                 message: "Data updated",

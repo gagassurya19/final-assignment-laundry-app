@@ -450,7 +450,7 @@ export default class Administrator extends React.Component {
                                                                         <li class="py-3 sm:py-4">
                                                                             <div class="flex items-center space-x-4">
                                                                                 <div class="flex-shrink-0">
-                                                                                    <img class="w-8 h-8 rounded-full" src={data.photo_profile ? (process.env.REACT_APP_ADMIN_API_IMAGE + data.photo_profile) : "http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png"} alt={data.photo_profile} />
+                                                                                    <img class="w-8 h-8 rounded-full" src={data.photo_profile ? (process.env.REACT_APP_ADMIN_API_IMAGE + data.photo_profile) : (process.env.REACT_APP_ADMIN_API_IMAGE + 'default.png')} alt={data.photo_profile} />
                                                                                 </div>
                                                                                 <div class="flex-1 min-w-0">
                                                                                     <p class="text-sm font-medium text-gray-900 dark:text-white">
@@ -554,7 +554,7 @@ export default class Administrator extends React.Component {
                                                     <div class="w-12/12 pb-5">
                                                         <img
                                                             id='img'
-                                                            src={this.state.photo_profile ? (process.env.REACT_APP_ADMIN_API_IMAGE + this.state.photo_profile) : "http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png"}
+                                                            src={this.state.photo_profile ? (process.env.REACT_APP_ADMIN_API_IMAGE + this.state.photo_profile) : (process.env.REACT_APP_ADMIN_API_IMAGE + 'default.png')}
                                                             alt="Photo profile"
                                                             class="w-40 h-40 rounded-full flex-shrink-0 object-cover object-center" />
                                                     </div>

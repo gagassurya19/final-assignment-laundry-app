@@ -1,4 +1,6 @@
 import React from "react"
+import axios from "axios";
+
 import { Modal } from "../../../../../components";
 import ComAddress from "./components_nested/com_address";
 
@@ -12,7 +14,8 @@ export default class modal_address extends React.Component {
                 modal_title: 'Address',
                 modal_subTitle: 'Pilih atau isi alamat anda',
                 modal_desc: 'Syarat Penggunaan: <br /> - Wajib memasukan semua kolom'
-            }
+            },
+            token: localStorage.getItem("token_admin"),
         }
     }
 
@@ -24,6 +27,30 @@ export default class modal_address extends React.Component {
         }
     }
 
+    // get total data address
+    getDataAddress = async () => {
+        const url = process.env.REACT_APP_CUSTOMER_API_URL + 'customer_address_customer/' + this.state.id_customer
+
+        await axios.get(url, {
+            headers: {
+                Authorization: "Bearer " + this.state.token
+            }
+        })
+            .then(result => {
+                this.setState({
+                    data_address_customer_total: result.data.data_address_customer.length
+                })
+            })
+            .catch(error => console.log(error))
+    }
+
+    async componentDidMount() {
+        await this.setState({
+            id_customer: this.props.id_customer
+        })
+        await this.getDataAddress()
+    }
+
     render() {
         return (
             <>
@@ -32,7 +59,7 @@ export default class modal_address extends React.Component {
                     <svg class="h-8 w-8 text-black" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z" />  <path d="M21 3L14.5 21a.55 .55 0 0 1 -1 0L10 14L3 10.5a.55 .55 0 0 1 0 -1L21 3" /></svg>
                     <span class="flex flex-col text-left pl-2">
                         <span class="title-font font-medium text-gray-900">Address</span>
-                        <span class="text-gray-500 text-sm">Total:</span>
+                        <span class="text-gray-500 text-sm">Total: {this.state.data_address_customer_total}</span>
                     </span>
                 </button>
 
@@ -48,7 +75,7 @@ export default class modal_address extends React.Component {
                     {/* Form */}
                     <div>
                         <div class="px-4 py-5 bg-white sm:p-6">
-                            <ComAddress />
+                            <ComAddress id_customer={this.props.id_customer}/>
                         </div>
                         <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
                             <button

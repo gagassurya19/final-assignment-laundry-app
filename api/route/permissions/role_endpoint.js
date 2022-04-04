@@ -13,10 +13,10 @@ const GET = {
     "/admin_address_customer": [ROLE.ADMIN, ROLE.KASIR],
     "/admin_payment_customer": [ROLE.ADMIN, ROLE.KASIR],
     "/admin_transaction": [ROLE.ADMIN, ROLE.KASIR, ROLE.OWNER],
-    "/customer_address_customer": [ROLE.CUSTOMER],
-    "/customer_payment_customer": [ROLE.CUSTOMER],
-    "/customer_transaction": [ROLE.CUSTOMER],
-    "/customer_crud": [ROLE.CUSTOMER],
+    "/customer_address_customer": [ROLE.ADMIN, ROLE.CUSTOMER],
+    "/customer_payment_customer": [ROLE.ADMIN, ROLE.CUSTOMER],
+    "/customer_transaction": [ROLE.ADMIN, ROLE.CUSTOMER],
+    "/customer_crud": [ROLE.ADMIN, ROLE.CUSTOMER],
     "/customer_invoice": [ROLE.ADMIN, ROLE.KASIR, ROLE.OWNER, ROLE.CUSTOMER],
 }
 
@@ -28,10 +28,10 @@ const POST = {
     "/admin_address_customer": [ROLE.ADMIN, ROLE.KASIR],
     "/admin_payment_customer": [ROLE.ADMIN, ROLE.KASIR],
     "/admin_transaction": [ROLE.ADMIN, ROLE.KASIR, ROLE.OWNER],
-    "/customer_address_customer": [ROLE.CUSTOMER],
-    "/customer_payment_customer": [ROLE.CUSTOMER],
-    "/customer_transaction": [ROLE.CUSTOMER],
-    "/customer_crud": [ROLE.CUSTOMER]
+    "/customer_address_customer": [ROLE.ADMIN, ROLE.CUSTOMER],
+    "/customer_payment_customer": [ROLE.ADMIN, ROLE.CUSTOMER],
+    "/customer_transaction": [ROLE.ADMIN, ROLE.CUSTOMER],
+    "/customer_crud": [ROLE.ADMIN, ROLE.CUSTOMER]
 }
 
 const PUT = {
@@ -42,10 +42,10 @@ const PUT = {
     "/admin_address_customer": [ROLE.ADMIN, ROLE.KASIR],
     "/admin_payment_customer": [ROLE.ADMIN, ROLE.KASIR],
     "/admin_transaction": [ROLE.ADMIN, ROLE.KASIR, ROLE.OWNER],
-    "/customer_address_customer": [ROLE.CUSTOMER],
-    "/customer_payment_customer": [ROLE.CUSTOMER],
-    "/customer_transaction": [ROLE.CUSTOMER],
-    "/customer_crud": [ROLE.CUSTOMER]
+    "/customer_address_customer": [ROLE.ADMIN, ROLE.CUSTOMER],
+    "/customer_payment_customer": [ROLE.ADMIN, ROLE.CUSTOMER],
+    "/customer_transaction": [ROLE.ADMIN, ROLE.CUSTOMER],
+    "/customer_crud": [ROLE.ADMIN, ROLE.CUSTOMER]
 }
 
 const DELETE = {
@@ -56,10 +56,10 @@ const DELETE = {
     "/admin_address_customer": [ROLE.ADMIN, ROLE.KASIR],
     "/admin_payment_customer": [ROLE.ADMIN, ROLE.KASIR],
     "/admin_transaction": [ROLE.ADMIN, ROLE.KASIR, ROLE.OWNER],
-    "/customer_address_customer": [ROLE.CUSTOMER],
-    "/customer_payment_customer": [ROLE.CUSTOMER],
-    "/customer_transaction": [ROLE.CUSTOMER],
-    "/customer_crud": [ROLE.CUSTOMER]
+    "/customer_address_customer": [ROLE.ADMIN, ROLE.CUSTOMER],
+    "/customer_payment_customer": [ROLE.ADMIN, ROLE.CUSTOMER],
+    "/customer_transaction": [ROLE.ADMIN, ROLE.CUSTOMER],
+    "/customer_crud": [ROLE.ADMIN, ROLE.CUSTOMER]
 }
 
 function canAccess(method, endpoint, role){
